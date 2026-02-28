@@ -1,8 +1,10 @@
 using CadastroCartsys.Data.Context;
 using CadastroCartsys.Data.Repositories;
 using CadastroCartsys.Data.Repositories.Interfaces;
-using CadastroCartsys.Presentation.Interfaces;
+using CadastroCartsys.Infrastructure.ViaCep;
+using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
 using CadastroCartsys.Presentation.Presenters;
+using CadastroCartsys.Presentation.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,9 +39,10 @@ namespace CadastroCartsys
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            // Infrastructure
+            // Singleton pois cria uma única instância durante toda a execução da aplicação
             services.AddSingleton<DbContext>();
 
+            // Scoped pois Cria uma instância por escopo
             // Repositories
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
@@ -48,9 +51,25 @@ namespace CadastroCartsys
             // Services
             //services.AddScoped<IClienteService, ClienteService>();
 
-            // Forms / Presenters — Transient pois cada abertura é uma nova instância
+            // Transient pois cada abertura é uma nova instância
+            // Forms 
             services.AddTransient<MainView>();
+            services.AddTransient<CustomerView>();
+
+            // Presenters
             services.AddTransient<MainPresenter>();
+            services.AddTransient<CustomerPresenter>();
+
+            // Uma função que, quando chamada, retorna uma nova instância
+            services.AddSingleton<Func<CustomerView>>(provider =>
+                () => provider.GetRequiredService<CustomerView>());
+
+            // Program.cs
+            services.AddHttpClient<ICepService, CepService>(client =>
+            {
+                client.BaseAddress = new Uri("https://viacep.com.br/");
+                client.Timeout = TimeSpan.FromSeconds(10);
+            });
         }
     }
 }
