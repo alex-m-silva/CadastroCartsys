@@ -14,6 +14,7 @@ namespace CadastroCartsys.Data.Mappings
                     "NOME" => type.GetProperty(nameof(Cliente.Nome))!,
                     "CEP" => type.GetProperty(nameof(Cliente.Cep))!,
                     "CPF_CNPJ" => type.GetProperty(nameof(Cliente.CpfCnpj))!,
+                    "CPFCNPJ" => type.GetProperty(nameof(Cliente.CpfCnpj))!,
                     "ENDERECO" => type.GetProperty(nameof(Cliente.Endereco))!,
                     "NUMERO" => type.GetProperty(nameof(Cliente.Numero))!,
                     "COMPLEMENTO" => type.GetProperty(nameof(Cliente.Complemento))!,

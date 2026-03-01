@@ -44,7 +44,7 @@
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
-            menuStrip1.TabIndex = 0;
+            menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
             // sistemaToolStripMenuItem
@@ -93,9 +93,10 @@
             BackColor = Color.White;
             ClientSize = new Size(800, 450);
             Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
             Name = "MainView";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CartSys - Inicio";
+            WindowState = FormWindowState.Maximized;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -106,10 +107,10 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem sistemaToolStripMenuItem;
-        private ToolStripMenuItem cadastrosToolStripMenuItem;
-        private ToolStripMenuItem relatóriosToolStripMenuItem;
         private ToolStripMenuItem sairToolStripMenuItem;
+        private ToolStripMenuItem cadastrosToolStripMenuItem;
         private ToolStripMenuItem clienteToolStripMenuItem;
+        private ToolStripMenuItem relatóriosToolStripMenuItem;
         private ToolStripMenuItem relatorioToolStripMenuItem;
     }
 }

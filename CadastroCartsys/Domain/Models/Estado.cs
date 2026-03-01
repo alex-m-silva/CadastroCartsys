@@ -13,6 +13,6 @@
             Uf = uf;
         }
 
-        private Estado() { }
+        public Estado() { }
     }
 }

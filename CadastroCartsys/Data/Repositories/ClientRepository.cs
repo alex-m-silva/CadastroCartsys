@@ -23,48 +23,50 @@ namespace CadastroCartsys.Data.Repositories
                                     SELECT
                                         c.ID,
                                         c.NOME,
-                                        c.CPF_CNPJ,
+                                        c.Cpf_Cnpj  AS CpfCnpj,
                                         c.CEP,
                                         c.ENDERECO,
                                         c.NUMERO,
                                         c.COMPLEMENTO,
                                         c.BAIRRO,
-                                        c.CIDADE,
                                         c.DATANASCIMENTO,
-                                        ci.ID   AS CIDADE_ID,
-                                        ci.NOME AS CIDADE_NOME,
+                                        ci.ID       AS CIDADE_ID,
+                                        ci.NOME     AS CIDADE_NOME,
                                         ci.ESTADOID,
-                                        e.ID    AS ESTADO_ID,
-                                        e.NOME  AS ESTADO_NOME,
+                                        e.ID        AS ESTADO_ID,
+                                        e.NOME      AS ESTADO_NOME,
                                         e.UF
                                     FROM dbo.CLIENTE c
                                     JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
                                     JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
                                     ORDER BY c.NOME ASC
                                     """;
-
-            return connection.Query<Cliente, Cidade, Estado, Cliente>(
+            var resultado = connection.Query<Cliente, Cidade, Estado, Cliente>(
                 sql,
                 map: (cliente, cidade, estado) =>
                 {
-                    cidade = new Cidade(cidade.Id, cidade.Nome, estado.Id, estado);
-                    cliente = new Cliente(
+                    // Coloca um breakpoint aqui e verifica os valores
+                    var estadoMapeado = new Estado(estado.Id, estado.Nome, estado.Uf);
+                    var cidadeMapeada = new Cidade(cidade.Id, cidade.Nome, estadoMapeado.Id, estadoMapeado);
+                    var clienteMapeado = new Cliente(
                         cliente.Id,
                         cliente.Nome,
                         cliente.CpfCnpj,
-                        cidade.Id,
+                        cidadeMapeada.Id,
                         cliente.Cep,
                         cliente.Endereco,
                         cliente.Numero,
                         cliente.Complemento,
                         cliente.Bairro,
                         cliente.DataNascimento,
-                        cidade
+                        cidadeMapeada
                     );
-                    return cliente;
+                    return clienteMapeado;
                 },
                 splitOn: "CIDADE_ID,ESTADO_ID"
-            );
+            ).ToList();
+
+            return resultado;
         }
 
         public void Delete(int id)
@@ -85,7 +87,7 @@ namespace CadastroCartsys.Data.Repositories
                                         c.ID,
                                         c.NOME,
                                         c.CEP,
-                                        c.CPF_CNPJ,
+                                        c.CPF_CNPJ AS CpfCnpj,
                                         c.ENDERECO,
                                         c.NUMERO,
                                         c.COMPLEMENTO,
@@ -174,7 +176,7 @@ namespace CadastroCartsys.Data.Repositories
 
             const string sql = """
                                 SELECT
-                                    v.ID, v.NOME, v.CPF_CNPJ, v.CEP,
+                                    v.ID, v.NOME, v.CPF_CNPJ AS CpfCnpj, v.CEP,
                                     v.ENDERECO, v.NUMERO, v.COMPLEMENTO, v.BAIRRO,
                                     v.CIDADE_ID, v.CIDADE_NOME,
                                     v.ESTADO_ID, v.ESTADO_NOME, v.ESTADO_UF,

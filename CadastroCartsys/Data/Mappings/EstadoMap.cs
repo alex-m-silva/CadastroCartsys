@@ -14,7 +14,9 @@ namespace CadastroCartsys.Data.Mappings
                 typeof(Estado), (type, columnName) => columnName.ToUpper() switch
                 {
                     "ID" => type.GetProperty(nameof(Estado.Id))!,
+                    "ESTADO_ID" => type.GetProperty(nameof(Estado.Id))!,
                     "NOME" => type.GetProperty(nameof(Estado.Nome))!,
+                    "ESTADO_NOME" => type.GetProperty(nameof(Estado.Nome))!,
                     "UF" => type.GetProperty(nameof(Estado.Uf))!,
                     _ => null!
                 }

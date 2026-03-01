@@ -1,5 +1,6 @@
 ﻿using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace CadastroCartsys.Infrastructure.ViaCep

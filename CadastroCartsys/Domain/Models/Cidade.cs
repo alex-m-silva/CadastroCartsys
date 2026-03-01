@@ -15,6 +15,6 @@
             Estado = estado;
         }
 
-        private Cidade() { }
+        public Cidade() { }
     }
 }

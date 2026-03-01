@@ -1,4 +1,5 @@
 using CadastroCartsys.Data.Context;
+using CadastroCartsys.Data.Mappings;
 using CadastroCartsys.Data.Repositories;
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Infrastructure.ViaCep;
@@ -7,6 +8,7 @@ using CadastroCartsys.Presentation.Presenters;
 using CadastroCartsys.Presentation.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 
 namespace CadastroCartsys
 {
@@ -54,15 +56,15 @@ namespace CadastroCartsys
             // Transient pois cada abertura é uma nova instância
             // Forms 
             services.AddTransient<MainView>();
-            services.AddTransient<CustomerView>();
+            services.AddTransient<ClientView>();
 
             // Presenters
             services.AddTransient<MainPresenter>();
-            services.AddTransient<CustomerPresenter>();
+            services.AddTransient<ClientPresenter>();
 
             // Uma função que, quando chamada, retorna uma nova instância
-            services.AddSingleton<Func<CustomerView>>(provider =>
-                () => provider.GetRequiredService<CustomerView>());
+            services.AddSingleton<Func<ClientView>>(provider =>
+                () => provider.GetRequiredService<ClientView>());
 
             // Program.cs
             services.AddHttpClient<ICepService, CepService>(client =>
@@ -70,6 +72,11 @@ namespace CadastroCartsys
                 client.BaseAddress = new Uri("https://viacep.com.br/");
                 client.Timeout = TimeSpan.FromSeconds(10);
             });
+
+            //Mapping
+            CidadeMap.Register();
+            EstadoMap.Register();
+            ClienteMap.Register();
         }
     }
 }

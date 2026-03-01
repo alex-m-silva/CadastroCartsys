@@ -46,6 +46,6 @@
             return !idsBlocked.Contains(Id);
         }
 
-        private Cliente() { }
+        public Cliente() { }
     }
 }

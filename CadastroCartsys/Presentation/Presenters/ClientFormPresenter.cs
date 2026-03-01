@@ -9,19 +9,28 @@ using System.Threading.Tasks;
 
 namespace CadastroCartsys.Presentation.Presenters
 {
-    public class CustomerFormPresenter
+    public class ClientFormPresenter
     {
         private readonly IClientRepository _clientRepository;
-        private readonly ICepService _cepService;
-        private ICustomerFormView _view = null!;
+        private readonly ICityRepository _cityRepository;
+        private readonly IStateRepository _stateRepository;
 
-        public CustomerFormPresenter(IClientRepository clientRepository, ICepService cepService)
+        private readonly ICepService _cepService;
+        private IClientFormView _view = null!;
+
+        public ClientFormPresenter(
+            IClientRepository clientRepository, 
+            ICityRepository cityRepository, 
+            IStateRepository stateRepository, 
+            ICepService cepService)
         {
             _clientRepository = clientRepository;
+            _cityRepository = cityRepository;
+            _stateRepository = stateRepository;
             _cepService = cepService;
         }
 
-        public void SetView(ICustomerFormView view)
+        public void SetView(IClientFormView view)
         {
             _view = view;
             AssociateEventHandlers();
@@ -29,7 +38,7 @@ namespace CadastroCartsys.Presentation.Presenters
 
         private void AssociateEventHandlers()
         {
-
+            LoadCombos();
         }
 
         private async void BuscarCep(object? sender, EventArgs e)
@@ -65,5 +74,23 @@ namespace CadastroCartsys.Presentation.Presenters
                     "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void LoadCombos()
+        {
+            try
+            {
+                 var estados = _stateRepository.GetAll().ToList();
+                 var cidades = _cityRepository.GetAll().ToList();
+
+                 _view.SetComboState(estados);
+                 _view.SetComboCity(cidades);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar filtros: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
