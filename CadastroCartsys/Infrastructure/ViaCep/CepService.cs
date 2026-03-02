@@ -28,7 +28,6 @@ namespace CadastroCartsys.Infrastructure.ViaCep
                 return null;
 
             return resultado;
-
         }
     }
 }

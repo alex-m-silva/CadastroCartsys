@@ -15,7 +15,7 @@ namespace CadastroCartsys
             _presenter.SetView(this);
         }
 
-        public event EventHandler LoadCustomerRegistrationFormEvent;
+        public event EventHandler LoadClientRegistrationFormEvent;
         public event EventHandler LoadCustomerReportFormEvent;
 
         private void AssociateEventsHandler()
@@ -27,7 +27,7 @@ namespace CadastroCartsys
 
             clienteToolStripMenuItem.Click += delegate
             {
-                LoadCustomerRegistrationFormEvent?.Invoke(this, EventArgs.Empty);
+                LoadClientRegistrationFormEvent?.Invoke(this, EventArgs.Empty);
             };
 
             relatorioToolStripMenuItem.Click += delegate

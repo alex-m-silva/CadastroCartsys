@@ -11,7 +11,7 @@
         public string? Complemento { get; private set; }
         public string? Bairro { get; private set; }
         public int CidadeId { get; private set; }
-        public DateOnly? DataNascimento { get; private set; }
+        public DateTime? DataNascimento { get; private set; }
         public Cidade? Cidade { get; private set; }
 
         public Cliente(
@@ -24,7 +24,7 @@
             string? numero = null,
             string? complemento = null,
             string? bairro = null,
-            DateOnly? dataNascimento = null,
+            DateTime? dataNascimento = null,
             Cidade? cidade = null)
         {
             Id = id;

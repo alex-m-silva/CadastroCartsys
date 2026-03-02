@@ -10,6 +10,8 @@ namespace CadastroCartsys.Presentation.Presenters
         private readonly IClientRepository _clientRepository;
         private IClientView _view = null!;
 
+        private Action<Cliente>? _onSelectedClient;
+
         private List<dynamic> _clientsInMemory = [];
         private readonly BindingSource _clientBindingSource = [];
 
@@ -30,6 +32,7 @@ namespace CadastroCartsys.Presentation.Presenters
             _view.SetCustomerListBindingSource(_clientBindingSource);
             _view.SearchClientsEvent += SearchinMemory;
             _view.FilterAlteredEvent += (s, e) => UpdateGrid(_clientsInMemory);
+            _view.ClientSelectionEvent += WhenSelectingClient;
 
             LoadAllClients();
         }
@@ -102,6 +105,18 @@ namespace CadastroCartsys.Presentation.Presenters
                 _clientBindingSource.RaiseListChangedEvents = true;
                 _clientBindingSource.ResetBindings(false);
             }
+        }
+
+        public void SetCallback(Action<Cliente> callback)
+        {
+            _onSelectedClient = callback;
+        }
+        private void WhenSelectingClient(object? sender, EventArgs e)
+        {
+            var client = _clientRepository.GetById(_view.SelectedId);
+            if (client is null) return;
+
+            _onSelectedClient?.Invoke(client);
         }
     }
 }

@@ -2,10 +2,12 @@ using CadastroCartsys.Data.Context;
 using CadastroCartsys.Data.Mappings;
 using CadastroCartsys.Data.Repositories;
 using CadastroCartsys.Data.Repositories.Interfaces;
+using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Infrastructure.ViaCep;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
 using CadastroCartsys.Presentation.Presenters;
 using CadastroCartsys.Presentation.Views;
+using CadastroCartsys.Presentation.Views.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
@@ -57,14 +59,29 @@ namespace CadastroCartsys
             // Forms 
             services.AddTransient<MainView>();
             services.AddTransient<ClientView>();
+            services.AddTransient<ClientFormView>();
 
             // Presenters
             services.AddTransient<MainPresenter>();
             services.AddTransient<ClientPresenter>();
+            services.AddTransient<ClientFormPresenter>();
 
             // Uma função que, quando chamada, retorna uma nova instância
             services.AddSingleton<Func<ClientView>>(provider =>
                 () => provider.GetRequiredService<ClientView>());
+
+            services.AddSingleton<Func<ClientFormView>>(provider =>
+                () => provider.GetRequiredService<ClientFormView>());
+
+            services.AddSingleton<Func<Action<Cliente>, ClientView>>(provider =>
+            callback =>
+            {
+                var view = provider.GetRequiredService<ClientView>();
+                var presenter = provider.GetRequiredService<ClientPresenter>();
+                presenter.SetCallback(callback);
+                presenter.SetView(view);
+                return view;
+            });
 
             // Program.cs
             services.AddHttpClient<ICepService, CepService>(client =>

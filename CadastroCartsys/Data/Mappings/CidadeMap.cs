@@ -11,9 +11,9 @@ namespace CadastroCartsys.Data.Mappings
                 typeof(Cidade), (type, columnName) => columnName.ToUpper() switch
                 {
                     "ID" => type.GetProperty(nameof(Cidade.Id))!,
-                    "CIDADE_ID" => type.GetProperty(nameof(Cidade.Id))!,    // ← alias splitOn
+                    "CIDADE_ID" => type.GetProperty(nameof(Cidade.Id))!,    
                     "NOME" => type.GetProperty(nameof(Cidade.Nome))!,
-                    "CIDADE_NOME" => type.GetProperty(nameof(Cidade.Nome))!,  // ← alias
+                    "CIDADE_NOME" => type.GetProperty(nameof(Cidade.Nome))!, 
                     "ESTADOID" => type.GetProperty(nameof(Cidade.EstadoId))!,
                     _ => null!
                 }

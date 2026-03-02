@@ -2,7 +2,7 @@
 {
     public interface IMainView
     {
-        event EventHandler LoadCustomerRegistrationFormEvent;
+        event EventHandler LoadClientRegistrationFormEvent;
         event EventHandler LoadCustomerReportFormEvent;
     }
 }

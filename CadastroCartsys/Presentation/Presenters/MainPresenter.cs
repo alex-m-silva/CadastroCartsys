@@ -1,35 +1,35 @@
 ﻿using CadastroCartsys.Presentation.Interfaces;
-using CadastroCartsys.Presentation.Views;
+using CadastroCartsys.Presentation.Views.Clients;
 
 namespace CadastroCartsys.Presentation.Presenters
 {
     public class MainPresenter
     {
         private IMainView _view = null!;
-        private ClientView? _customerForm;
+        private ClientFormView? _customerForm;
 
-        private readonly Func<ClientView> _cadastroClienteFactory;
+        private readonly Func<ClientFormView> _clientFactoryRegistration;
 
-        public MainPresenter( Func<ClientView> cadastroClienteFactory)
+        public MainPresenter(Func<ClientFormView> clientFactoryRegistration)
         {
-            _cadastroClienteFactory = cadastroClienteFactory;
+            _clientFactoryRegistration = clientFactoryRegistration;
         }
 
         public void SetView(IMainView view)
         {
-            _view = view;                    
-            AssociateEventHandlers();        
+            _view = view;
+            AssociateEventHandlers();
         }
 
         private void AssociateEventHandlers()
         {
             _view.LoadCustomerReportFormEvent += LoadCustomerReportForm;
-            _view.LoadCustomerRegistrationFormEvent += LoadCustomerRegistrationForm;
+            _view.LoadClientRegistrationFormEvent += LoadClientRegistrationForm;
         }
 
-        private void LoadCustomerRegistrationForm(object? sender, EventArgs e)
+        private void LoadClientRegistrationForm(object? sender, EventArgs e)
         {
-            AbrirClientes();
+            OpenClientFormView();
         }
 
         private void LoadCustomerReportForm(object? sender, EventArgs e)
@@ -37,12 +37,11 @@ namespace CadastroCartsys.Presentation.Presenters
             throw new NotImplementedException();
         }
 
-
-        private void AbrirClientes()
+        private void OpenClientFormView()
         {
             if (_customerForm == null || _customerForm.IsDisposed)
             {
-                _customerForm = _cadastroClienteFactory();
+                _customerForm = _clientFactoryRegistration();
                 _customerForm.FormClosed += (s, e) => _customerForm = null;
                 _customerForm.Show();
             }

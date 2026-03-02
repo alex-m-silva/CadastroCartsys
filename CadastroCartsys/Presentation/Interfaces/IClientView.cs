@@ -12,13 +12,16 @@ namespace CadastroCartsys.Presentation.Interfaces
     {
         event EventHandler SearchClientsEvent;
         event EventHandler FilterAlteredEvent;
+        event EventHandler ClientSelectionEvent;
 
         void SetCustomerListBindingSource(BindingSource source);
         void FillFilterComboBox(DataGridViewColumnCollection Columns);
 
         DataGridViewColumnCollection Columns { get; }
+        Cliente? SelectedClient { get; }
 
         string SearchTerm { get; }
         string FieldResearch { get; }
+        int SelectedId { get; set; }
     }
 }

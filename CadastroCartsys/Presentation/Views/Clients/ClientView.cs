@@ -12,6 +12,7 @@ namespace CadastroCartsys.Presentation.Views
 
         public event EventHandler SearchClientsEvent;
         public event EventHandler FilterAlteredEvent;
+        public event EventHandler ClientSelectionEvent;
 
         public ClientView(ClientPresenter presenter)
         {
@@ -22,15 +23,18 @@ namespace CadastroCartsys.Presentation.Views
         }
 
         public DataGridViewColumnCollection Columns => dtgvCustomers.Columns;
+        public Cliente? SelectedClient { get; private set; }
+
+        public int SelectedId { get; set; }
 
         public string SearchTerm => txtTerm.Text;
         public string FieldResearch => cbxFilter.SelectedItem is null
             ? string.Empty
             : ((dynamic)cbxFilter.SelectedItem).Value.ToString();
 
+
         private void AssociateEventsHandler()
         {
-
             txtTerm.TextChanged += delegate
             {
                 SearchClientsEvent?.Invoke(this, EventArgs.Empty);
@@ -42,6 +46,15 @@ namespace CadastroCartsys.Presentation.Views
 
                 FilterAlteredEvent?.Invoke(this, EventArgs.Empty);
             };
+
+            dtgvCustomers.CellDoubleClick += (s, e) =>
+            {
+                if (e.RowIndex < 0) return;
+
+                SelectedId = (int)dtgvCustomers.Rows[e.RowIndex].Cells["Column1"].Value;
+                ClientSelectionEvent?.Invoke(this, EventArgs.Empty);
+                this.Close();
+            };
         }
 
         public void SetCustomerListBindingSource(BindingSource source)
@@ -50,21 +63,6 @@ namespace CadastroCartsys.Presentation.Views
             dtgvCustomers.DataSource = source;
         }
 
-        //public void SetComboState(IEnumerable<Estado> estados)
-        //{
-        //    cmbState.DataSource = estados.ToList();
-        //    cmbState.DisplayMember = nameof(Estado.Nome);
-        //    cmbState.ValueMember = nameof(Estado.Id);
-        //    cmbState.SelectedIndex = -1; 
-        //}
-
-        //public void SetComboCity(IEnumerable<Cidade> cidades)
-        //{
-        //    cmbCity.DataSource = cidades.ToList();
-        //    cmbCity.DisplayMember = nameof(Cidade.Nome);
-        //    cmbCity.ValueMember = nameof(Cidade.Id);
-        //    cmbCity.SelectedIndex = -1;
-        //}
 
         private void FormatDatagrid(DataGridView gridView)
         {
