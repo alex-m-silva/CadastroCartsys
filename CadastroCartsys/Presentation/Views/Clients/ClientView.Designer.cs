@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label1 = new Label();
             panel2 = new Panel();
@@ -44,14 +46,15 @@
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             Column7 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
             panel10 = new Panel();
             panel20 = new Panel();
             label4 = new Label();
@@ -163,6 +166,7 @@
             // cbxFilter
             // 
             cbxFilter.Dock = DockStyle.Fill;
+            cbxFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxFilter.Font = new Font("Segoe UI Semibold", 12.25F, FontStyle.Bold);
             cbxFilter.FormattingEnabled = true;
             cbxFilter.Location = new Point(12, 0);
@@ -200,9 +204,27 @@
             dtgvCustomers.BackgroundColor = Color.White;
             dtgvCustomers.BorderStyle = BorderStyle.None;
             dtgvCustomers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.Navy;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.Navy;
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dtgvCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dtgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10, Column11 });
+            dtgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column11, Column4, Column10, Column9, Column6, Column5, Column7, Column8, Column12 });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.DodgerBlue;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dtgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
             dtgvCustomers.Dock = DockStyle.Fill;
+            dtgvCustomers.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dtgvCustomers.EnableHeadersVisualStyles = false;
             dtgvCustomers.GridColor = Color.White;
             dtgvCustomers.Location = new Point(0, 90);
             dtgvCustomers.Margin = new Padding(4, 3, 4, 3);
@@ -237,6 +259,13 @@
             Column3.Name = "Column3";
             Column3.Width = 81;
             // 
+            // Column11
+            // 
+            Column11.DataPropertyName = "DataNascimento";
+            Column11.HeaderText = "Nascimento";
+            Column11.Name = "Column11";
+            Column11.Width = 96;
+            // 
             // Column4
             // 
             Column4.DataPropertyName = "Cep";
@@ -244,12 +273,19 @@
             Column4.Name = "Column4";
             Column4.Width = 53;
             // 
-            // Column5
+            // Column10
             // 
-            Column5.DataPropertyName = "Endereco";
-            Column5.HeaderText = "Endereço";
-            Column5.Name = "Column5";
-            Column5.Width = 81;
+            Column10.DataPropertyName = "EstadoNome";
+            Column10.HeaderText = "Estado";
+            Column10.Name = "Column10";
+            Column10.Width = 67;
+            // 
+            // Column9
+            // 
+            Column9.DataPropertyName = "CidadeNome";
+            Column9.HeaderText = "Cidade";
+            Column9.Name = "Column9";
+            Column9.Width = 69;
             // 
             // Column6
             // 
@@ -257,6 +293,13 @@
             Column6.HeaderText = "Bairro";
             Column6.Name = "Column6";
             Column6.Width = 63;
+            // 
+            // Column5
+            // 
+            Column5.DataPropertyName = "Endereco";
+            Column5.HeaderText = "Endereço";
+            Column5.Name = "Column5";
+            Column5.Width = 81;
             // 
             // Column7
             // 
@@ -272,26 +315,13 @@
             Column8.Name = "Column8";
             Column8.Width = 109;
             // 
-            // Column9
+            // Column12
             // 
-            Column9.DataPropertyName = "Cidade";
-            Column9.HeaderText = "Cidade";
-            Column9.Name = "Column9";
-            Column9.Width = 69;
-            // 
-            // Column10
-            // 
-            Column10.DataPropertyName = "Estado";
-            Column10.HeaderText = "Estado";
-            Column10.Name = "Column10";
-            Column10.Width = 67;
-            // 
-            // Column11
-            // 
-            Column11.DataPropertyName = "Data de Nacimento";
-            Column11.HeaderText = "Data de nascimento";
-            Column11.Name = "Column11";
-            Column11.Width = 125;
+            Column12.DataPropertyName = "CidadeId";
+            Column12.HeaderText = "CidadeId";
+            Column12.Name = "Column12";
+            Column12.Visible = false;
+            Column12.Width = 79;
             // 
             // panel10
             // 
@@ -383,13 +413,14 @@
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column10;
+        private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column8;
-        private DataGridViewTextBoxColumn Column9;
-        private DataGridViewTextBoxColumn Column10;
-        private DataGridViewTextBoxColumn Column11;
+        private DataGridViewTextBoxColumn Column12;
     }
 }

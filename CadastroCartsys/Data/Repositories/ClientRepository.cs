@@ -15,40 +15,53 @@ namespace CadastroCartsys.Data.Repositories
             _context = context;
         }
 
-        public IEnumerable<Cliente> GetAll()
+        public async Task<List<Cliente>> GetAllAsync()
         {
             using var connection = _context.CreateConnection();
 
             const string sql = """
-                                    SELECT
-                                        c.ID,
-                                        c.NOME,
-                                        c.Cpf_Cnpj  AS CpfCnpj,
-                                        c.CEP,
-                                        c.ENDERECO,
-                                        c.NUMERO,
-                                        c.COMPLEMENTO,
-                                        c.BAIRRO,
-                                        c.DATANASCIMENTO,
-                                        ci.ID       AS CIDADE_ID,
-                                        ci.NOME     AS CIDADE_NOME,
-                                        ci.ESTADOID,
-                                        e.ID        AS ESTADO_ID,
-                                        e.NOME      AS ESTADO_NOME,
-                                        e.UF
-                                    FROM dbo.CLIENTE c
-                                    JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
-                                    JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
-                                    ORDER BY c.NOME ASC
-                                    """;
-            var resultado = connection.Query<Cliente, Cidade, Estado, Cliente>(
+                            SELECT
+                                c.ID,
+                                c.NOME,
+                                c.Cpf_Cnpj  AS CpfCnpj,
+                                c.CEP,
+                                c.ENDERECO,
+                                c.NUMERO,
+                                c.COMPLEMENTO,
+                                c.BAIRRO,
+                                c.DATANASCIMENTO,
+                                ci.ID       AS CIDADE_ID,
+                                ci.NOME     AS CIDADE_NOME,
+                                ci.ESTADOID,
+                                e.ID        AS ESTADO_ID,
+                                e.NOME      AS ESTADO_NOME,
+                                e.UF
+                            FROM dbo.CLIENTE c
+                            JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
+                            JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
+                            ORDER BY c.NOME ASC
+                            """;
+
+            var estadoCache = new Dictionary<int, Estado>();
+            var cidadeCache = new Dictionary<int, Cidade>();
+
+            var resultado = await connection.QueryAsync<Cliente, Cidade, Estado, Cliente>(
                 sql,
                 map: (cliente, cidade, estado) =>
                 {
-                    // Coloca um breakpoint aqui e verifica os valores
-                    var estadoMapeado = new Estado(estado.Id, estado.Nome, estado.Uf);
-                    var cidadeMapeada = new Cidade(cidade.Id, cidade.Nome, estadoMapeado.Id, estadoMapeado);
-                    var clienteMapeado = new Cliente(
+                    if (!estadoCache.TryGetValue(estado.Id, out var estadoMapeado))
+                    {
+                        estadoMapeado = new Estado(estado.Id, estado.Nome, estado.Uf);
+                        estadoCache[estado.Id] = estadoMapeado;
+                    }
+
+                    if (!cidadeCache.TryGetValue(cidade.Id, out var cidadeMapeada))
+                    {
+                        cidadeMapeada = new Cidade(cidade.Id, cidade.Nome, estadoMapeado.Id, estadoMapeado);
+                        cidadeCache[cidade.Id] = cidadeMapeada;
+                    }
+
+                    return new Cliente(
                         cliente.Id,
                         cliente.Nome,
                         cliente.CpfCnpj,
@@ -61,52 +74,51 @@ namespace CadastroCartsys.Data.Repositories
                         cliente.DataNascimento,
                         cidadeMapeada
                     );
-                    return clienteMapeado;
                 },
                 splitOn: "CIDADE_ID,ESTADO_ID"
-            ).ToList();
+            );
 
-            return resultado;
+            return resultado.ToList();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             using var connection = _context.CreateConnection();
 
             const string sql = "DELETE FROM dbo.CLIENTE WHERE ID = @Id";
 
-            connection.Execute(sql, new { Id = id });
+            await connection.ExecuteAsync(sql, new { Id = id });
         }
 
-        public Cliente? GetById(int id)
+        public async Task<Cliente?> GetByIdAsync(int id)
         {
             using var connection = _context.CreateConnection();
 
             const string sql = """
-                                    SELECT
-                                        c.ID,
-                                        c.NOME,
-                                        c.CEP,
-                                        c.CPF_CNPJ AS CpfCnpj,
-                                        c.ENDERECO,
-                                        c.NUMERO,
-                                        c.COMPLEMENTO,
-                                        c.BAIRRO,
-                                        c.CIDADE,
-                                        c.DATANASCIMENTO,
-                                        ci.ID       AS CIDADE_ID,
-                                        ci.NOME     AS CIDADE_NOME,
-                                        ci.ESTADOID,
-                                        e.ID        AS ESTADO_ID,
-                                        e.NOME      AS ESTADO_NOME,
-                                        e.UF
-                                    FROM dbo.CLIENTE c
-                                    JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
-                                    JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
-                                    WHERE c.ID = @Id
-                                    """;
+                            SELECT
+                                c.ID,
+                                c.NOME,
+                                c.CEP,
+                                c.CPF_CNPJ AS CpfCnpj,
+                                c.ENDERECO,
+                                c.NUMERO,
+                                c.COMPLEMENTO,
+                                c.BAIRRO,
+                                c.CIDADE,
+                                c.DATANASCIMENTO,
+                                ci.ID       AS CIDADE_ID,
+                                ci.NOME     AS CIDADE_NOME,
+                                ci.ESTADOID,
+                                e.ID        AS ESTADO_ID,
+                                e.NOME      AS ESTADO_NOME,
+                                e.UF
+                            FROM dbo.CLIENTE c
+                            JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
+                            JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
+                            WHERE c.ID = @Id
+                            """;
 
-            return connection.Query<Cliente, Cidade, Estado, Cliente>(
+            var result = await connection.QueryAsync<Cliente, Cidade, Estado, Cliente>(
                 sql,
                 map: (cliente, cidade, estado) =>
                 {
@@ -128,10 +140,12 @@ namespace CadastroCartsys.Data.Repositories
                 },
                 param: new { Id = id },
                 splitOn: "CIDADE_ID,ESTADO_ID"
-            ).FirstOrDefault();
+            );
+
+            return result.FirstOrDefault();
         }
 
-        public int Save(Cliente cliente)
+        public async Task<int> SaveAsync(Cliente cliente)
         {
             using var connection = _context.CreateConnection();
 
@@ -144,10 +158,12 @@ namespace CadastroCartsys.Data.Repositories
                                         VALUES
                                             (NEXT VALUE FOR dbo.SEQ_CLIENTE_ID, @Nome, @Cep, @CpfCnpj, @Endereco, @Numero, @Complemento, @Bairro, @CidadeId, @DataNascimento);
 
-                                        SELECT CAST(SCOPE_IDENTITY() AS INT);
+                                        SELECT CAST(CURRENT_VALUE AS INT) 
+                                                  FROM SYS.SEQUENCES 
+                                                  WHERE NAME = 'SEQ_CLIENTE_ID';
                                         """;
 
-                return connection.ExecuteScalar<int>(sql, cliente);
+                return connection.QuerySingle<int>(sql, cliente);
             }
 
             // UPDATE
@@ -165,12 +181,12 @@ namespace CadastroCartsys.Data.Repositories
                                         WHERE ID = @Id
                                         """;
 
-            connection.Execute(sqlUpdate, cliente);
+            await connection.ExecuteAsync(sqlUpdate, cliente);
             return cliente.Id;
         }
 
         // ClienteRepository
-        public IEnumerable<Cliente> Search(CustomerFilterDto filtro)
+        public async Task<IEnumerable<Cliente>> SearchAsync(CustomerFilterDto filtro)
         {
             using var connection = _context.CreateConnection();
 
@@ -194,7 +210,7 @@ namespace CadastroCartsys.Data.Repositories
                                 ORDER BY v.NOME ASC
                                 """;
 
-            return connection.Query<Cliente>(sql, new
+            return await connection.QueryAsync<Cliente>(sql, new
             {
                 Id = string.IsNullOrWhiteSpace(filtro.Id) ? null : filtro.Id,
                 Nome = string.IsNullOrWhiteSpace(filtro.Nome) ? null : filtro.Nome,

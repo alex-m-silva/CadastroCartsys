@@ -18,6 +18,9 @@ namespace CadastroCartsys.Presentation.Presenters
 
         private readonly ICepService _cepService;
 
+        private List<Estado> _stateCache = [];
+        private IEnumerable<Cidade> _citiesCache = [];
+
         private ClientView? _customerForm;
         private IClientFormView _view = null!;
 
@@ -42,6 +45,7 @@ namespace CadastroCartsys.Presentation.Presenters
             _view = view;
             AssociateEventHandlers();
             LoadStates();
+            LoadCities();
         }
 
         private void AssociateEventHandlers()
@@ -50,6 +54,52 @@ namespace CadastroCartsys.Presentation.Presenters
             _view.SearchCepEvent += SearchCep;
             _view.SaveClientEvent += SaveClient;
             _view.FilterCityEvent += FilterCity;
+            _view.DeleteClientEvent += DeleteClient;
+            _view.FilterStateEvent += FilterState;
+        }
+
+        private async void DeleteClient(object? sender, EventArgs e)
+        {
+            var dto = _view.GetForm();
+
+            if (dto.Id == 0)
+            {
+                _view.DisplayAttentionMessage("Nenhum cliente selecionado para exclusão.");
+                return;
+            }
+
+            var client = await _clientRepository.GetByIdAsync(dto.Id);
+
+            if (!ValidateClientExclusion(client)) return;
+
+            await _clientRepository.DeleteAsync(client!.Id);
+            _view.DisplaySuccessMessage($"Cliente {client.Nome} excluído com sucesso!");
+            _view.ClearFields();
+        }
+
+        private bool ValidateClientExclusion(Cliente? client)
+        {
+            if (client == null)
+            {
+                _view.DisplayErrorMessage("Cliente não encontrado no banco de dados.");
+                return false;
+            }
+
+            if (!client.CanBeDeleted())
+            {
+                _view.DisplayAttentionMessage(
+                    $"O cliente ID {client.Id} não pode ser excluído por questões de segurança.\n\n" +
+                    $"Motivo: ID protegido pelo sistema."
+                    );
+                return false;
+            }
+
+            return _view.ShowConfirmation(
+                $"Confirmar exclusão do cliente:\n\n" +
+                $"ID: {client.Id}\n" +
+                $"Nome: {client.Nome}\n" +
+                $"Esta operação não pode ser desfeita!",
+                "Confirmar Exclusão");
         }
 
         private void LoadSearchClient(object? sender, EventArgs e)
@@ -69,25 +119,28 @@ namespace CadastroCartsys.Presentation.Presenters
 
                 if (result is null)
                 {
-                    MessageBox.Show("CEP não encontrado.", "Aviso",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _view.DisplayAttentionMessage
+                        ("CEP não encontrado.");
                     return;
                 }
 
                 _view.Endereco = result.Logradouro ?? string.Empty;
                 _view.Bairro = result.Bairro ?? string.Empty;
                 _view.Cidade = result.Localidade ?? string.Empty;
-                _view.Estado = result.Uf ?? string.Empty;
+                _view.Estado = _stateCache
+                    .FirstOrDefault(e => e.Uf == result.Uf)?
+                    .Nome ?? string.Empty;
+                
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "CEP Inválido",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _view.DisplayErrorMessage
+                    ("CEP Inválido");
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao consultar CEP. Verifique sua conexão.",
-                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _view.DisplayErrorMessage
+                    ("Erro ao consultar CEP. Verifique sua conexão.");
             }
         }
 
@@ -121,39 +174,70 @@ namespace CadastroCartsys.Presentation.Presenters
                 DataNascimento = cliente.DataNascimento
             };
 
+            _view.PopularForm(dto);
+            await SelecionarCombos(cliente);
+        }
+ 
+        private async Task SelecionarCombos(Cliente cliente)
+        {
+            // Tenta pelo CEP primeiro
             if (!string.IsNullOrWhiteSpace(cliente.Cep))
             {
-                //var result = await _cepService.GetCepAsync(cliente.Cep);
-               //  _view.ComboState = result.
+                try
+                {
+                    var result = await _cepService.GetCepAsync(cliente.Cep);
+
+                    if (result is not null && !result.Erro)
+                    {
+                        SelecionarEstadoECidade(result.Uf!, result.Localidade!);
+                        return; 
+                    }
+                }
+                catch { }
             }
-            _view.PopularForm(dto);
+
+            if (cliente.Cidade is not null)
+                SelecionarEstadoECidade(
+                    cliente.Cidade.Estado?.Uf ?? string.Empty,
+                    cliente.Cidade.Nome
+                );
         }
 
-        private void SaveClient(object? sender, EventArgs e)
+        private void SelecionarEstadoECidade(string uf, string nomeCidade)
+        {
+            if (string.IsNullOrWhiteSpace(uf)) return;
+
+            var estado = _stateCache
+                .FirstOrDefault(e => e.Uf.Equals(uf, StringComparison.OrdinalIgnoreCase));
+
+            if (estado is null) return;
+
+            _view.ComboState.SelectedValue = estado.Id;
+
+            if (string.IsNullOrWhiteSpace(nomeCidade)) return;
+
+            var cidade = _citiesCache
+                .FirstOrDefault(c => c.EstadoId == estado.Id &&
+                                     c.Nome.Equals(nomeCidade, StringComparison.OrdinalIgnoreCase));
+
+            if (cidade is not null)
+                _view.ComboCity.SelectedValue = cidade.Id;
+        }
+
+        private async void SaveClient(object? sender, EventArgs e)
         {
             try
             {
                 var dto = _view.GetForm();
 
-                // Valida campos obrigatórios
                 if (string.IsNullOrWhiteSpace(dto.Nome))
                 {
                     _view.DisplayErrorMessage("Nome é obrigatório.");
                     return;
                 }
-
                 if (string.IsNullOrWhiteSpace(dto.CpfCnpj))
                 {
                     _view.DisplayErrorMessage("CPF/CNPJ é obrigatório.");
-                    return;
-                }
-
-                if (dto.CidadeId == 0)
-                {
-                    _view.DisplayErrorMessage(
-                        $@"Cidade '{dto.CidadeNome}' não encontrada no sistema.
-                        Por favor, entre em contato com o responsavel para cadastrá-la."
-                    );
                     return;
                 }
 
@@ -170,13 +254,20 @@ namespace CadastroCartsys.Presentation.Presenters
                     dto.DataNascimento
                 );
 
-                var novoId = _clientRepository.Save(cliente);
+                var novoId = await _clientRepository.SaveAsync(cliente);
 
-                var mensagem = dto.Id == 0
-                    ? $"Cliente cadastrado com sucesso! ID: {novoId}"
+                var isInsert = dto.Id == 0;
+                var mensagem = isInsert
+                            ? $"Cliente cadastrado com sucesso! ID: {novoId}"
                     : "Cliente atualizado com sucesso!";
 
                 _view.DisplaySuccessMessage(mensagem);
+                if (isInsert)
+                {
+                    var clienteSalvo = await _clientRepository.GetByIdAsync(novoId);
+                    if (clienteSalvo is not null)
+                        PopularForm(clienteSalvo);
+                }
             }
             catch (Exception ex)
             {
@@ -186,21 +277,50 @@ namespace CadastroCartsys.Presentation.Presenters
 
         private void LoadStates()
         {
-            var estados = _stateRepository.GetAll().ToList();
+            _stateCache = _stateRepository.GetAll().ToList();
+            FilterStatesDataSource(_stateCache);
+        }
+        private void FilterState(object? sender, EventArgs e)
+        {
+            if (_view.ComboCity.SelectedValue is not int cidadeId)
+            {
+                FilterStatesDataSource(_stateCache);
+                return;
+            }
 
-            _view.ComboState.DataSource = estados;
+            var states = _stateCache.Where(x => x.Id == cidadeId).ToList();
+            FilterStatesDataSource(states);
+        }
+        private void FilterStatesDataSource (List<Estado> states)
+        {
+            _view.ComboState.DataSource = states;
             _view.ComboState.DisplayMember = nameof(Estado.Nome);
             _view.ComboState.ValueMember = nameof(Estado.Id);
             _view.ComboState.SelectedIndex = -1;
         }
 
+        private void LoadCities()
+        {
+            _citiesCache = _cityRepository.GetAll().ToList();
+            FilterCitiesDataSource(_citiesCache);
+        }
         private void FilterCity(object? sender, EventArgs e)
         {
-            if (_view.ComboState.SelectedValue is not int estadoId) return;
+            if (_view.ComboState.SelectedValue is not int estadoId)
+            {
+                FilterCitiesDataSource(_citiesCache);
+                return;
+            }
 
-            var cidades = _cityRepository.GetByState(estadoId).ToList();
+            var cities = _citiesCache
+                .Where(x => x.EstadoId == estadoId)
+                .ToList();
 
-            _view.ComboCity.DataSource = cidades;
+            FilterCitiesDataSource(cities);
+        }
+        private void FilterCitiesDataSource(IEnumerable<Cidade> cities)
+        {
+            _view.ComboCity.DataSource = cities;
             _view.ComboCity.DisplayMember = nameof(Cidade.Nome);
             _view.ComboCity.ValueMember = nameof(Cidade.Id);
             _view.ComboCity.SelectedIndex = -1;

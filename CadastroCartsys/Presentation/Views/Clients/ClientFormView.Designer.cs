@@ -79,14 +79,12 @@
             dtpDataNascimento = new DateTimePicker();
             panel28 = new Panel();
             txtCpfCnpj = new TextBox();
-            panel47 = new Panel();
             panel52 = new Panel();
             panel27 = new Panel();
             label10 = new Label();
             panel20 = new Panel();
             panel54 = new Panel();
             label11 = new Label();
-            panel55 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
             txtNome = new TextBox();
@@ -100,7 +98,7 @@
             label1 = new Label();
             panel44 = new Panel();
             panel43 = new Panel();
-            button5 = new Button();
+            btnDelete = new Button();
             btnCancelar = new Button();
             panel48 = new Panel();
             btnSave = new Button();
@@ -155,39 +153,44 @@
             // 
             // btnSearch
             // 
+            btnSearch.BackColor = Color.White;
+            btnSearch.BackgroundImageLayout = ImageLayout.Center;
             btnSearch.Dock = DockStyle.Left;
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.Location = new Point(87, 0);
+            btnSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSearch.Location = new Point(114, 0);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(93, 28);
-            btnSearch.TabIndex = 3;
+            btnSearch.Size = new Size(121, 28);
+            btnSearch.TabIndex = 2;
             btnSearch.Text = "Pesquisar";
             btnSearch.TextAlign = ContentAlignment.MiddleRight;
-            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.UseVisualStyleBackColor = false;
             // 
             // panel3
             // 
             panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(72, 0);
+            panel3.Location = new Point(99, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(15, 28);
             panel3.TabIndex = 2;
             // 
             // btnClose
             // 
+            btnClose.BackColor = Color.White;
             btnClose.Dock = DockStyle.Left;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnClose.ImageAlign = ContentAlignment.MiddleLeft;
             btnClose.Location = new Point(10, 0);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(62, 28);
+            btnClose.Size = new Size(89, 28);
             btnClose.TabIndex = 1;
             btnClose.Text = "Voltar";
             btnClose.TextAlign = ContentAlignment.MiddleRight;
-            btnClose.UseVisualStyleBackColor = true;
+            btnClose.UseVisualStyleBackColor = false;
             // 
             // panel8
             // 
@@ -214,7 +217,7 @@
             groupBox1.Location = new Point(10, 172);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(563, 191);
-            groupBox1.TabIndex = 3;
+            groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "Endereço";
             // 
@@ -244,7 +247,7 @@
             txtComplemento.Location = new Point(0, 20);
             txtComplemento.Name = "txtComplemento";
             txtComplemento.Size = new Size(554, 29);
-            txtComplemento.TabIndex = 5;
+            txtComplemento.TabIndex = 14;
             // 
             // panel45
             // 
@@ -305,7 +308,7 @@
             txtBairro.Location = new Point(325, 20);
             txtBairro.Name = "txtBairro";
             txtBairro.Size = new Size(229, 29);
-            txtBairro.TabIndex = 10;
+            txtBairro.TabIndex = 13;
             // 
             // panel31
             // 
@@ -322,7 +325,7 @@
             txtNumero.Location = new Point(220, 20);
             txtNumero.Name = "txtNumero";
             txtNumero.Size = new Size(95, 29);
-            txtNumero.TabIndex = 7;
+            txtNumero.TabIndex = 12;
             // 
             // panel32
             // 
@@ -339,7 +342,7 @@
             txtEndereco.Location = new Point(0, 20);
             txtEndereco.Name = "txtEndereco";
             txtEndereco.Size = new Size(210, 29);
-            txtEndereco.TabIndex = 5;
+            txtEndereco.TabIndex = 11;
             // 
             // panel33
             // 
@@ -456,12 +459,15 @@
             // cbxCidade
             // 
             cbxCidade.Dock = DockStyle.Left;
+            cbxCidade.DropDownHeight = 200;
             cbxCidade.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             cbxCidade.FormattingEnabled = true;
+            cbxCidade.IntegralHeight = false;
+            cbxCidade.ItemHeight = 21;
             cbxCidade.Location = new Point(347, 20);
             cbxCidade.Name = "cbxCidade";
             cbxCidade.Size = new Size(207, 29);
-            cbxCidade.TabIndex = 11;
+            cbxCidade.TabIndex = 10;
             // 
             // panel9
             // 
@@ -474,8 +480,10 @@
             // cbxEstado
             // 
             cbxEstado.Dock = DockStyle.Left;
+            cbxEstado.DropDownHeight = 200;
             cbxEstado.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             cbxEstado.FormattingEnabled = true;
+            cbxEstado.IntegralHeight = false;
             cbxEstado.Location = new Point(130, 20);
             cbxEstado.Name = "cbxEstado";
             cbxEstado.Size = new Size(207, 29);
@@ -496,7 +504,7 @@
             txtCep.Location = new Point(0, 20);
             txtCep.Name = "txtCep";
             txtCep.Size = new Size(120, 29);
-            txtCep.TabIndex = 5;
+            txtCep.TabIndex = 8;
             // 
             // panel21
             // 
@@ -595,7 +603,7 @@
             groupBox2.Location = new Point(10, 33);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(563, 134);
-            groupBox2.TabIndex = 4;
+            groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Cliente";
             // 
@@ -613,7 +621,6 @@
             panel40.Controls.Add(dtpDataNascimento);
             panel40.Controls.Add(panel28);
             panel40.Controls.Add(txtCpfCnpj);
-            panel40.Controls.Add(panel47);
             panel40.Controls.Add(panel52);
             panel40.Dock = DockStyle.Top;
             panel40.Location = new Point(0, 0);
@@ -629,7 +636,7 @@
             dtpDataNascimento.Location = new Point(284, 20);
             dtpDataNascimento.Name = "dtpDataNascimento";
             dtpDataNascimento.Size = new Size(270, 29);
-            dtpDataNascimento.TabIndex = 12;
+            dtpDataNascimento.TabIndex = 6;
             // 
             // panel28
             // 
@@ -643,25 +650,17 @@
             // 
             txtCpfCnpj.Dock = DockStyle.Left;
             txtCpfCnpj.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtCpfCnpj.Location = new Point(10, 20);
+            txtCpfCnpj.Location = new Point(0, 20);
+            txtCpfCnpj.MaxLength = 20;
             txtCpfCnpj.Name = "txtCpfCnpj";
-            txtCpfCnpj.Size = new Size(264, 29);
-            txtCpfCnpj.TabIndex = 10;
-            // 
-            // panel47
-            // 
-            panel47.Dock = DockStyle.Left;
-            panel47.Location = new Point(0, 20);
-            panel47.Name = "panel47";
-            panel47.Size = new Size(10, 30);
-            panel47.TabIndex = 8;
+            txtCpfCnpj.Size = new Size(274, 29);
+            txtCpfCnpj.TabIndex = 5;
             // 
             // panel52
             // 
             panel52.Controls.Add(panel27);
             panel52.Controls.Add(panel20);
             panel52.Controls.Add(panel54);
-            panel52.Controls.Add(panel55);
             panel52.Dock = DockStyle.Top;
             panel52.Location = new Point(0, 0);
             panel52.Name = "panel52";
@@ -700,9 +699,9 @@
             // 
             panel54.Controls.Add(label11);
             panel54.Dock = DockStyle.Left;
-            panel54.Location = new Point(10, 0);
+            panel54.Location = new Point(0, 0);
             panel54.Name = "panel54";
-            panel54.Size = new Size(264, 20);
+            panel54.Size = new Size(274, 20);
             panel54.TabIndex = 8;
             // 
             // label11
@@ -715,14 +714,6 @@
             label11.Size = new Size(66, 17);
             label11.TabIndex = 0;
             label11.Text = "CPF/CNPJ";
-            // 
-            // panel55
-            // 
-            panel55.Dock = DockStyle.Left;
-            panel55.Location = new Point(0, 0);
-            panel55.Name = "panel55";
-            panel55.Size = new Size(10, 20);
-            panel55.TabIndex = 7;
             // 
             // panel5
             // 
@@ -750,9 +741,10 @@
             txtNome.Dock = DockStyle.Left;
             txtNome.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtNome.Location = new Point(130, 20);
+            txtNome.MaxLength = 80;
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(424, 29);
-            txtNome.TabIndex = 7;
+            txtNome.TabIndex = 4;
             // 
             // panel11
             // 
@@ -841,7 +833,7 @@
             // 
             // panel43
             // 
-            panel43.Controls.Add(button5);
+            panel43.Controls.Add(btnDelete);
             panel43.Controls.Add(btnCancelar);
             panel43.Controls.Add(panel48);
             panel43.Controls.Add(btnSave);
@@ -850,27 +842,36 @@
             panel43.Location = new Point(10, 368);
             panel43.Name = "panel43";
             panel43.Size = new Size(563, 30);
-            panel43.TabIndex = 7;
+            panel43.TabIndex = 15;
             // 
-            // button5
+            // btnDelete
             // 
-            button5.Dock = DockStyle.Right;
-            button5.Location = new Point(463, 0);
-            button5.Name = "button5";
-            button5.Size = new Size(100, 30);
-            button5.TabIndex = 10;
-            button5.Text = "Excluir";
-            button5.UseVisualStyleBackColor = true;
+            btnDelete.BackColor = Color.Red;
+            btnDelete.Dock = DockStyle.Right;
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(463, 0);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(100, 30);
+            btnDelete.TabIndex = 18;
+            btnDelete.Text = "Excluir";
+            btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnCancelar
             // 
+            btnCancelar.BackColor = Color.Orange;
             btnCancelar.Dock = DockStyle.Left;
+            btnCancelar.FlatAppearance.BorderSize = 0;
+            btnCancelar.FlatStyle = FlatStyle.Flat;
+            btnCancelar.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnCancelar.Location = new Point(102, 0);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(100, 30);
-            btnCancelar.TabIndex = 9;
+            btnCancelar.TabIndex = 17;
             btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.UseVisualStyleBackColor = false;
             // 
             // panel48
             // 
@@ -882,13 +883,18 @@
             // 
             // btnSave
             // 
+            btnSave.BackColor = Color.Green;
             btnSave.Dock = DockStyle.Left;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(10, 0);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(82, 30);
-            btnSave.TabIndex = 7;
+            btnSave.TabIndex = 16;
             btnSave.Text = "Salvar";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.UseVisualStyleBackColor = false;
             // 
             // panel46
             // 
@@ -911,7 +917,7 @@
             panel53.Dock = DockStyle.Left;
             panel53.Location = new Point(0, 28);
             panel53.Name = "panel53";
-            panel53.Size = new Size(10, 379);
+            panel53.Size = new Size(10, 373);
             panel53.TabIndex = 9;
             // 
             // panel2
@@ -919,7 +925,7 @@
             panel2.Dock = DockStyle.Right;
             panel2.Location = new Point(573, 28);
             panel2.Name = "panel2";
-            panel2.Size = new Size(10, 379);
+            panel2.Size = new Size(10, 373);
             panel2.TabIndex = 10;
             // 
             // ClientFormView
@@ -927,7 +933,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(583, 407);
+            ClientSize = new Size(583, 401);
             Controls.Add(panel43);
             Controls.Add(panel44);
             Controls.Add(groupBox1);
@@ -1044,7 +1050,7 @@
         private Label label1;
         private Panel panel44;
         private Panel panel43;
-        private Button button5;
+        private Button btnDelete;
         private Button btnCancelar;
         private Panel panel48;
         private Button btnSave;
@@ -1064,13 +1070,11 @@
         private DateTimePicker dtpDataNascimento;
         private Panel panel28;
         private TextBox txtCpfCnpj;
-        private Panel panel47;
         private Panel panel52;
         private Panel panel27;
         private Label label10;
         private Panel panel20;
         private Panel panel54;
         private Label label11;
-        private Panel panel55;
     }
 }

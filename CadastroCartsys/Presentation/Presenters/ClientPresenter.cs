@@ -1,4 +1,5 @@
 ﻿using CadastroCartsys.Common.Extensions;
+using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Presentation.Interfaces;
@@ -12,7 +13,7 @@ namespace CadastroCartsys.Presentation.Presenters
 
         private Action<Cliente>? _onSelectedClient;
 
-        private List<dynamic> _clientsInMemory = [];
+        private IEnumerable<ClientFormDto> _clientsInMemory = [];
         private readonly BindingSource _clientBindingSource = [];
 
         public ClientPresenter(IClientRepository clientRepository)
@@ -37,42 +38,41 @@ namespace CadastroCartsys.Presentation.Presenters
             LoadAllClients();
         }
 
-        private void LoadAllClients()
+        private async void LoadAllClients()
         {
             try
             {
-                _clientsInMemory = _clientRepository.GetAll()
-               .Select(c => (dynamic)new
-               {
-                   c.Id,
-                   c.Nome,
-                   c.CpfCnpj,
-                   c.Endereco,
-                   c.Numero,
-                   c.Bairro,
-                   c.Complemento,
-                   Cidade = c.Cidade.Nome ?? string.Empty,
-                   Estado = c.Cidade.Estado.Nome ?? string.Empty
-               })
-               .ToList();
+                var clients = await _clientRepository.GetAllAsync();
 
-                UpdateGrid(_clientsInMemory);
+                _clientsInMemory = clients
+                    .Select(c => new ClientFormDto
+                    {
+                        Id = c.Id,
+                        Nome = c.Nome,
+                        CpfCnpj = c.CpfCnpj,
+                        Cep = c.Cep,
+                        Endereco = c.Endereco,
+                        Numero = c.Numero,
+                        Complemento = c.Complemento,
+                        Bairro = c.Bairro,
+                        CidadeId = c.CidadeId,
+                        CidadeNome = c.Cidade?.Nome ?? string.Empty,
+                        EstadoNome = c.Cidade?.Estado?.Nome ?? string.Empty,
+                        DataNascimento = c.DataNascimento
+                    });
+
+                _clientBindingSource.DataSource = _clientsInMemory.Take(1000);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"Erro ao carregar clientes: {ex.Message}",
-                    "Erro",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show($"Erro ao carregar clientes: {ex.Message}");
             }
         }
-        private void SearchinMemory(object? sender, EventArgs e)
+        private async void SearchinMemory(object? sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(_view.SearchTerm))
             {
-                UpdateGrid(_clientsInMemory);
+                _clientBindingSource.DataSource = _clientsInMemory;
                 return;
             }
 
@@ -91,29 +91,20 @@ namespace CadastroCartsys.Presentation.Presenters
                 })
                 .ToList();
 
-            UpdateGrid(result);
+            _clientBindingSource.DataSource = result.ToList();
         }
-        private void UpdateGrid(List<dynamic> clientes)
+        private void UpdateGrid(IEnumerable<ClientFormDto> clients)
         {
-            try
-            {
-                _clientBindingSource.RaiseListChangedEvents = false;
-                _clientBindingSource.DataSource = clientes;
-            }
-            finally
-            {
-                _clientBindingSource.RaiseListChangedEvents = true;
-                _clientBindingSource.ResetBindings(false);
-            }
+            _clientBindingSource.DataSource = _clientBindingSource.DataSource = clients.ToString();
         }
 
         public void SetCallback(Action<Cliente> callback)
         {
             _onSelectedClient = callback;
         }
-        private void WhenSelectingClient(object? sender, EventArgs e)
+        private async void WhenSelectingClient(object? sender, EventArgs e)
         {
-            var client = _clientRepository.GetById(_view.SelectedId);
+            var client = await _clientRepository.GetByIdAsync(_view.SelectedId);
             if (client is null) return;
 
             _onSelectedClient?.Invoke(client);

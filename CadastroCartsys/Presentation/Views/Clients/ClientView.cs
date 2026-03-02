@@ -32,6 +32,7 @@ namespace CadastroCartsys.Presentation.Views
             ? string.Empty
             : ((dynamic)cbxFilter.SelectedItem).Value.ToString();
 
+        public DataGridView DataGridClients => dtgvCustomers;
 
         private void AssociateEventsHandler()
         {
@@ -63,12 +64,11 @@ namespace CadastroCartsys.Presentation.Views
             dtgvCustomers.DataSource = source;
         }
 
-
         private void FormatDatagrid(DataGridView gridView)
         {
             gridView.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             gridView.DefaultCellStyle.Font = new Font("Arial", 8, FontStyle.Regular);
-            gridView.DefaultCellStyle.Padding = new Padding(2);
+            gridView.DefaultCellStyle.Padding = new Padding(5);
         }
 
         // Sobrescreve Fun para enter = tab

@@ -44,6 +44,8 @@ namespace CadastroCartsys.Presentation.Views.Clients
         public event EventHandler LoadSearchClientEvent;
         public event EventHandler SaveClientEvent;
         public event EventHandler FilterCityEvent;
+        public event EventHandler FilterStateEvent;
+        public event EventHandler DeleteClientEvent;
 
         private void AssociateEventsHandler()
         {
@@ -61,6 +63,11 @@ namespace CadastroCartsys.Presentation.Views.Clients
             {
                 SearchCepEvent?.Invoke(this, EventArgs.Empty);
             };
+            txtCep.KeyPress += (s, e) =>
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                    e.Handled = true;
+            };
 
             btnSave.Click += delegate
             {
@@ -71,10 +78,28 @@ namespace CadastroCartsys.Presentation.Views.Clients
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
             };
+            cbxEstado.Leave += delegate
+            {
+                FilterCityEvent?.Invoke(this, EventArgs.Empty);
+            };
+            cbxCidade.SelectionChangeCommitted += delegate
+            {
+                if (string.IsNullOrWhiteSpace(cbxEstado.Text))
+                    FilterStateEvent?.Invoke(this, EventArgs.Empty);
+            };
+            cbxCidade.Leave += delegate
+            {
+                FilterStateEvent?.Invoke(this, EventArgs.Empty);
+            };
 
             btnCancelar.Click += delegate
             {
                 ClearFields();
+            };
+
+            btnDelete.Click += delegate
+            {
+                DeleteClientEvent?.Invoke(this, EventArgs.Empty);
             };
         }
 
@@ -90,10 +115,10 @@ namespace CadastroCartsys.Presentation.Views.Clients
             txtBairro.Text = dto.Bairro ?? string.Empty;
             cbxCidade.Text = dto.CidadeNome;
             cbxEstado.Text = dto.EstadoNome;
-            dtpDataNascimento.Value = dto.DataNascimento.Value;
+            dtpDataNascimento.Value = dto.DataNascimento ?? DateTime.Now.Date;
         }
 
-        private void ClearFields()
+        public void ClearFields()
         {
             txtCodigo.Clear();
             txtNome.Clear();
@@ -136,6 +161,34 @@ namespace CadastroCartsys.Presentation.Views.Clients
         {
             MessageBox.Show(message, "Erro",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public void DisplayAttentionMessage(string message)
+        {
+            MessageBox.Show(message, "Atenção",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public bool ShowConfirmation(string message, string title)
+        {
+            var result = MessageBox.Show(message, title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+
+            return result == DialogResult.Yes;
+        }
+
+        // Sobrescreve Fun para enter = tab
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

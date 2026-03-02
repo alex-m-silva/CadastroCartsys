@@ -17,6 +17,7 @@ namespace CadastroCartsys.Presentation.Interfaces
         void SetCustomerListBindingSource(BindingSource source);
         void FillFilterComboBox(DataGridViewColumnCollection Columns);
 
+        DataGridView DataGridClients { get; }
         DataGridViewColumnCollection Columns { get; }
         Cliente? SelectedClient { get; }
 

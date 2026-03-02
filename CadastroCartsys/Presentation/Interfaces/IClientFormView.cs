@@ -9,11 +9,16 @@ namespace CadastroCartsys.Presentation.Interfaces
         event EventHandler LoadSearchClientEvent;
         event EventHandler SaveClientEvent;
         event EventHandler FilterCityEvent;
+        event EventHandler FilterStateEvent;
+        event EventHandler DeleteClientEvent;
 
         void DisplaySuccessMessage(string message);
         void DisplayErrorMessage(string message);
+        void DisplayAttentionMessage(string message);
+        bool ShowConfirmation(string message, string title);
 
-        void PopularForm(ClientFormDto dto);  
+        void PopularForm(ClientFormDto dto);
+        void ClearFields();
         ClientFormDto GetForm();
 
         ComboBox ComboState { get; }
