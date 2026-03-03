@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2026 09:33:07" ReportInfo.Modified="03/03/2026 09:37:35" ReportInfo.CreatorVersion="2026.1.4.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="Clientes" ReferenceName="Clientes" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Nome" DataType="System.String"/>
+      <Column Name="CpfCnpj" DataType="System.String"/>
+      <Column Name="Cep" DataType="System.String"/>
+      <Column Name="Bairro" DataType="System.String"/>
+      <Column Name="Cidade" DataType="System.String"/>
+      <Column Name="Estado" DataType="System.String"/>
+      <Column Name="DataNascimento" DataType="System.DateTime"/>
+    </BusinessObjectDataSource>
+    <Parameter Name="FiltroDescricao" DataType="System.String" AsString=""/>
+    <Parameter Name="IdInicial" DataType="System.String" AsString=""/>
+    <Parameter Name="IdFinal" DataType="System.String" AsString=""/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="56.7">
+      <TextObject Name="Text1" Width="718.2" Height="37.8" Fill.Color="RoyalBlue" Text="Relatório de Clientes" HorzAlign="Center" VertAlign="Center" Font="Arial, 20pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="TextFiltro" Top="37.8" Width="718.2" Height="18.9" Text="Filtro: [FiltroDescricao]" HorzAlign="Center" Font="Arial, 9pt, style=Italic"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="60.7" Width="718.2" Height="18.9">
+      <TextObject Name="hId" Width="56.7" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="ID" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hNome" Left="56.7" Width="189" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="Nome" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hCpf" Left="245.7" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="CPF/CNPJ" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hCep" Left="359.1" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="CEP" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hBairro" Left="434.7" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="Bairro" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hCidade" Left="548.1" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="Cidade" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="hEstado" Left="661.5" Width="56.7" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="Estado" Font="Arial, 9pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="83.6" Width="718.2" Height="18.9" DataSource="Clientes">
+      <TextObject Name="dId" Width="56.7" Height="18.9" Border.Lines="All" Text="[Clientes.Id]" Font="Arial, 9pt"/>
+      <TextObject Name="dNome" Left="56.7" Width="189" Height="18.9" Border.Lines="All" Text="[Clientes.Nome]" Font="Arial, 9pt"/>
+      <TextObject Name="dCpf" Left="245.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Clientes.CpfCnpj]" Font="Arial, 9pt"/>
+      <TextObject Name="dCep" Left="359.1" Width="75.6" Height="18.9" Border.Lines="All" Text="[Clientes.Cep]" Font="Arial, 9pt"/>
+      <TextObject Name="dBairro" Left="434.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Clientes.Bairro]" Font="Arial, 9pt"/>
+      <TextObject Name="dCidade" Left="548.1" Width="113.4" Height="18.9" Border.Lines="All" Text="[Clientes.Cidade]" Font="Arial, 9pt"/>
+      <TextObject Name="dEstado" Left="661.5" Width="56.7" Height="18.9" Border.Lines="All" Text="[Clientes.Estado]" Font="Arial, 9pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="106.5" Width="718.2" Height="18.9">
+      <TextObject Name="Text5" Left="9.45" Width="200" Height="18.9" Text="[Date]" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text6" Left="642.6" Width="75.6" Height="18.9" Text="[Page#]" HorzAlign="Right" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text7" Width="718.2" Height="18.9" Text="CartSys Software" HorzAlign="Center" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

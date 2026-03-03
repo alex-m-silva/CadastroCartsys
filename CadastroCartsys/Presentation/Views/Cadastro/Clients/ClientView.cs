@@ -23,16 +23,13 @@ namespace CadastroCartsys.Presentation.Views
         }
 
         public DataGridViewColumnCollection Columns => dtgvCustomers.Columns;
-        public Cliente? SelectedClient { get; private set; }
 
-        public int SelectedId { get; set; }
+        public int? SelectedId { get; set; }
 
         public string SearchTerm => txtTerm.Text;
         public string FieldResearch => cbxFilter.SelectedItem is null
             ? string.Empty
             : ((dynamic)cbxFilter.SelectedItem).Value.ToString();
-
-        public DataGridView DataGridClients => dtgvCustomers;
 
         private void AssociateEventsHandler()
         {
@@ -56,6 +53,7 @@ namespace CadastroCartsys.Presentation.Views
                     return;
 
                 SelectedId = (int)dtgvCustomers.Rows[e.RowIndex].Cells["Column1"].Value;
+                if (SelectedId == null) return;
                 ClientSelectionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             };

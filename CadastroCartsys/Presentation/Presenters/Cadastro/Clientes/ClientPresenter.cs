@@ -89,7 +89,8 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         }
         private void UpdateGrid(IEnumerable<ClientFormDto> clients)
         {
-            _clientBindingSource.DataSource = _clientBindingSource.DataSource = clients.ToString();
+            _clientBindingSource.DataSource = 
+                _clientBindingSource.DataSource = clients.ToString();
         }
 
         public void SetCallback(Action<Cliente> callback)
@@ -98,7 +99,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         }
         private async void WhenSelectingClient(object? sender, EventArgs e)
         {
-            var client = await _clientRepository.GetByIdAsync(_view.SelectedId);
+            var client = await _clientRepository.GetByIdAsync(_view.SelectedId.Value);
             if (client is null) return;
 
             _onSelectedClient?.Invoke(client);

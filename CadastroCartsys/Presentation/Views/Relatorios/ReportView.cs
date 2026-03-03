@@ -20,6 +20,7 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             InitializeComponent();
             _presenter = presenter;
             _presenter.SetView(this);
+            AssociateEventsHandler();
         }
 
         public int? IdInitial => int.TryParse(txtIdInicial.Text, out var i) ? i : null;
@@ -58,6 +59,18 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
             };
+        }
+
+        // Sobrescreve Fun para enter = tab
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         public void DisplayErrorMessage(string message)

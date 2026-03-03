@@ -41,5 +41,11 @@ namespace CadastroCartsys.Common.Extensions
                 ? $"{digits[..5]}-{digits[5..8]}"
                 : valor;
         }
+
+        public static string OnlyDigits(this string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor)) return valor;
+            return new string(valor.Where(char.IsDigit).ToArray());
+        }
     }
 }

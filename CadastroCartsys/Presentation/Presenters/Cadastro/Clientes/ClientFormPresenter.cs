@@ -5,7 +5,8 @@ using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
 using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
 using CadastroCartsys.Presentation.Views;
-using System.Runtime.ConstrainedExecution;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Windows.Forms.AxHost;
 
 namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
 {
@@ -167,71 +168,66 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
                 _customerForm.BringToFront();
             }
         }
-        private async void PopularForm(Cliente cliente)
+        private async void PopularForm(Cliente client)
         {
             var dto = new ClientFormDto
             {
-                Id = cliente.Id,
-                Nome = cliente.Nome,
-                CpfCnpj = cliente.CpfCnpj,
-                Cep = cliente.Cep,
-                Endereco = cliente.Endereco,
-                Numero = cliente.Numero,
-                Complemento = cliente.Complemento,
-                Bairro = cliente.Bairro,
-                CidadeNome = cliente.Cidade?.Nome ?? string.Empty,
-                EstadoNome = cliente.Cidade?.Estado?.Nome ?? string.Empty,
-                DataNascimento = cliente.DataNascimento
+                Id = client.Id,
+                Nome = client.Nome,
+                CpfCnpj = client.CpfCnpj,
+                Cep = client.Cep,
+                Endereco = client.Endereco,
+                Numero = client.Numero,
+                Complemento = client.Complemento,
+                Bairro = client.Bairro,
+                CidadeNome = client.Cidade?.Nome ?? string.Empty,
+                EstadoNome = client.Cidade?.Estado?.Nome ?? string.Empty,
+                DataNascimento = client.DataNascimento
             };
 
             _view.PopularForm(dto);
-            await SelecionarCombos(cliente);
+            await SelectCombos(client);
         }
- 
-        private async Task SelecionarCombos(Cliente cliente)
-        {
-            // Tenta pelo CEP primeiro
-            if (!string.IsNullOrWhiteSpace(cliente.Cep))
-            {
-                try
-                {
-                    var result = await _cepService.GetCepAsync(cliente.Cep);
 
-                    if (result is not null && !result.Erro)
-                    {
-                        SelecionarEstadoECidade(result.Uf!, result.Localidade!);
-                        return; 
-                    }
+        private async Task SelectCombos(Cliente client)
+        {
+            if (!string.IsNullOrWhiteSpace(client.Cep))
+            {
+                var result = await _cepService.GetCepAsync(client.Cep);
+
+                if (result is not null && !result.Erro)
+                {
+                    SelectStateandCity(result.Uf!, result.Localidade!);
+                    return;
                 }
-                catch { }
             }
 
-            if (cliente.Cidade is not null)
-                SelecionarEstadoECidade(
-                    cliente.Cidade.Estado?.Uf ?? string.Empty,
-                    cliente.Cidade.Nome
+            if (client.Cidade is not null)
+                SelectStateandCity(
+                    client.Cidade.Estado?.Uf ?? string.Empty,
+                    client.Cidade.Nome
                 );
         }
 
-        private void SelecionarEstadoECidade(string uf, string nomeCidade)
+        private void SelectStateandCity(string uf, string cityName)
         {
             if (string.IsNullOrWhiteSpace(uf)) return;
 
-            var estado = _stateCache
+            var state = _stateCache
                 .FirstOrDefault(e => e.Uf.Equals(uf, StringComparison.OrdinalIgnoreCase));
 
-            if (estado is null) return;
+            if (state is null) return;
 
-            _view.ComboState.SelectedValue = estado.Id;
+            _view.ComboState.SelectedValue = state.Id;
 
-            if (string.IsNullOrWhiteSpace(nomeCidade)) return;
+            if (string.IsNullOrWhiteSpace(cityName)) return;
 
-            var cidade = _citiesCache
-                .FirstOrDefault(c => c.EstadoId == estado.Id &&
-                                     c.Nome.Equals(nomeCidade, StringComparison.OrdinalIgnoreCase));
+            var city = _citiesCache
+                .FirstOrDefault(c => c.EstadoId == state.Id &&
+                                     c.Nome.Equals(cityName, StringComparison.OrdinalIgnoreCase));
 
-            if (cidade is not null)
-                _view.ComboCity.SelectedValue = cidade.Id;
+            if (city is not null)
+                _view.ComboCity.SelectedValue = city.Id;
         }
 
         private async void SaveClient(object? sender, EventArgs e)
@@ -251,12 +247,12 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
                     return;
                 }
 
-                var cliente = new Cliente(
+                var client = new Cliente(
                     dto.Id,
                     dto.Nome,
-                    dto.CpfCnpj,
+                    dto.CpfCnpj.OnlyDigits(),
                     dto.CidadeId,
-                    dto.Cep,
+                    dto.Cep.OnlyDigits(),
                     dto.Endereco,
                     dto.Numero,
                     dto.Complemento,
@@ -264,19 +260,19 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
                     dto.DataNascimento
                 );
 
-                var novoId = await _clientRepository.SaveAsync(cliente);
+                var newId = await _clientRepository.SaveAsync(client);
 
                 var isInsert = dto.Id == 0;
-                var mensagem = isInsert
-                            ? $"Cliente cadastrado com sucesso! Código: {novoId}"
+                var message = isInsert
+                            ? $"Cliente cadastrado com sucesso! Código: {newId}"
                     : "Cliente atualizado com sucesso!";
 
-                _view.DisplaySuccessMessage(mensagem);
+                _view.DisplaySuccessMessage(message);
                 if (isInsert)
                 {
-                    var clienteSalvo = await _clientRepository.GetByIdAsync(novoId);
-                    if (clienteSalvo is not null)
-                        PopularForm(clienteSalvo);
+                    var clientSaved = await _clientRepository.GetByIdAsync(newId);
+                    if (clientSaved is not null)
+                        PopularForm(clientSaved);
                 }
             }
             catch (Exception ex)
@@ -290,8 +286,8 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             _stateCache = _stateRepository.GetAll().ToList();
             FilterStatesDataSource(_stateCache);
         }
-        
-        private void FilterStatesDataSource (List<Estado> states)
+
+        private void FilterStatesDataSource(List<Estado> states)
         {
             _view.ComboState.DataSource = states;
             _view.ComboState.DisplayMember = nameof(Estado.Nome);
@@ -306,7 +302,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         }
         private void FilterCity(object? sender, EventArgs e)
         {
-            if (_view.ComboState.SelectedValue is not int estadoId)
+            if (_view.ComboState.SelectedValue is not int stateId)
             {
                 FilterCitiesDataSource(_citiesCache);
                 FilterStatesDataSource(_stateCache);
@@ -316,7 +312,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             _view.ComboCity.SelectedIndex = -1;
 
             var cities = _citiesCache
-                .Where(x => x.EstadoId == estadoId)
+                .Where(x => x.EstadoId == stateId)
                 .ToList();
 
             FilterCitiesDataSource(cities);

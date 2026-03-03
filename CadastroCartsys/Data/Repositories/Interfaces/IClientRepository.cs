@@ -11,6 +11,6 @@ namespace CadastroCartsys.Data.Repositories.Interfaces
         Task DeleteAsync(int id);
 
         Task<IEnumerable<ClientReportDto>> GetReportAsync
-            (ClientReportFilterDto filter;
+            (ClientReportFilterDto filter);
     }
 }

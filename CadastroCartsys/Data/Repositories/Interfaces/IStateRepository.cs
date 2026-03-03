@@ -10,6 +10,5 @@ namespace CadastroCartsys.Data.Repositories.Interfaces
     public interface IStateRepository
     {
         IEnumerable<Estado> GetAll();
-        Estado? GetById(int id);
     }
 }

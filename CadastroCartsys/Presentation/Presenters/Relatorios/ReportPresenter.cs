@@ -2,6 +2,7 @@
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Presentation.Interfaces.Cadastro.Relatorios;
+using FastReport;
 
 namespace CadastroCartsys.Presentation.Presenters.Relatorios
 {
@@ -113,21 +114,40 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
 
             return true;
         }
-
         private void ExibirRelatorio(List<ClientReportDto> dados, ClientReportFilterDto filtro)
         {
+            var reportPath = Path.Combine(AppContext.BaseDirectory, "Reports", "RelClientes.frx");
+
             var report = new FastReport.Report();
 
-            report.Load("Reports/ClientReport.frx");
+            report.Load(reportPath);
 
-            report.RegisterData(dados, "Clientes");
+            report.RegisterData(dados.Take(100), "Clientes");
             report.GetDataSource("Clientes").Enabled = true;
 
+            report.SetParameterValue("FiltroDescricao", ObterDescricaoFiltro(filtro));
             report.SetParameterValue("IdInicial", filtro.IdInicial?.ToString() ?? "Todos");
             report.SetParameterValue("IdFinal", filtro.IdFinal?.ToString() ?? "Todos");
-            report.SetParameterValue("Filtro", ObterDescricaoFiltro(filtro));
+
             report.Prepare();
-            
+
+            using var saveDialog = new SaveFileDialog
+            {
+                Filter = "PDF|*.pdf",
+                FileName = $"Relatorio_Clientes_{DateTime.Now:yyyyMMdd_HHmmss}.pdf",
+                Title = "Salvar Relatório"
+            };
+
+            if (saveDialog.ShowDialog() != DialogResult.OK) return;
+
+            var export = new FastReport.Export.PdfSimple.PDFSimpleExport();
+            report.Export(export, saveDialog.FileName);
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = saveDialog.FileName,
+                UseShellExecute = true
+            });
         }
 
         private string ObterDescricaoFiltro(ClientReportFilterDto filtro)

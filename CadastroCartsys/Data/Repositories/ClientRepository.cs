@@ -197,7 +197,7 @@ namespace CadastroCartsys.Data.Repositories
                                     c.CEP,
                                     c.BAIRRO,
                                     ci.NOME     AS Cidade,
-                                    e.NOME      AS Estado
+                                    e.Uf      AS Estado
                                 FROM dbo.CLIENTE c
                                 JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
                                 JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID

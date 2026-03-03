@@ -185,7 +185,6 @@ namespace CadastroCartsys.Presentation.Views.Clients
             return result == DialogResult.Yes;
         }
 
-        // Sobrescreve Fun para enter = tab
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Enter)

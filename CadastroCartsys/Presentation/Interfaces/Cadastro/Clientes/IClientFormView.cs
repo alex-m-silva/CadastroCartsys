@@ -1,5 +1,4 @@
 ﻿using CadastroCartsys.Core.DTOs;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes
 {
