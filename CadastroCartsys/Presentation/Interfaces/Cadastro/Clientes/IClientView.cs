@@ -9,6 +9,8 @@
         void SetCustomerListBindingSource(BindingSource source);
         void FillFilterComboBox(DataGridViewColumnCollection Columns);
 
+        void DisplayErrorMessage(string message);
+
         DataGridViewColumnCollection Columns { get; }
 
         string SearchTerm { get; }

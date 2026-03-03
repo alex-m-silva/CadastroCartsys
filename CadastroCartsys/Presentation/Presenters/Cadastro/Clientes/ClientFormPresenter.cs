@@ -238,12 +238,19 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
 
                 if (string.IsNullOrWhiteSpace(dto.Nome))
                 {
-                    _view.DisplayErrorMessage("Nome é obrigatório.");
+                    _view.DisplayAttentionMessage("Nome é obrigatório.");
                     return;
                 }
                 if (string.IsNullOrWhiteSpace(dto.CpfCnpj))
                 {
-                    _view.DisplayErrorMessage("CPF/CNPJ é obrigatório.");
+                    _view.DisplayAttentionMessage("CPF/CNPJ é obrigatório.");
+                    return;
+                }
+                if(dto.CidadeId == 0)
+                {
+                    _view.DisplayAttentionMessage
+                        ($"A cidade {dto.EstadoNome}: {dto.CidadeNome} não está cadastrada no sistema.\n" +
+                          "Entre em contato com o administrador.");
                     return;
                 }
 

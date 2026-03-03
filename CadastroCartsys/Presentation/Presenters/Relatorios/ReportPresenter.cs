@@ -69,19 +69,19 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
         {
             try
             {
-                var filtro = ObterFiltro();
-                if (!ValidarFiltro(filtro)) return;
+                var filter = GetFilter();
+                if (!ValidateFilter(filter)) return;
 
-                var dados = await _clientRepository.GetReportAsync(filtro);
-                var lista = dados.ToList();
+                var dataClient = await _clientRepository.GetReportAsync(filter);
+                var dataClientList = dataClient.ToList();
 
-                if (!lista.Any())
+                if (!dataClientList.Any())
                 {
                     _view.DisplayErrorMessage("Nenhum cliente encontrado com os filtros informados.");
                     return;
                 }
 
-                ExibirRelatorio(lista, filtro);
+                DisplayReport(dataClientList, filter);
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             }
         }
 
-        private ClientReportFilterDto ObterFiltro()
+        private ClientReportFilterDto GetFilter()
         {
             return new ClientReportFilterDto
             {
@@ -101,12 +101,12 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             };
         }
 
-        private bool ValidarFiltro(ClientReportFilterDto filtro)
+        private bool ValidateFilter(ClientReportFilterDto filter)
         {
-            if (filtro.Todos) return true;
+            if (filter.Todos) return true;
 
-            if (filtro.IdInicial.HasValue && filtro.IdFinal.HasValue
-                && filtro.IdInicial > filtro.IdFinal)
+            if (filter.IdInicial.HasValue && filter.IdFinal.HasValue
+                && filter.IdInicial > filter.IdFinal)
             {
                 _view.DisplayErrorMessage("ID Inicial não pode ser maior que ID Final.");
                 return false;
@@ -114,7 +114,7 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
 
             return true;
         }
-        private void ExibirRelatorio(List<ClientReportDto> dados, ClientReportFilterDto filtro)
+        private void DisplayReport(List<ClientReportDto> dataClient, ClientReportFilterDto filter)
         {
             var reportPath = Path.Combine(AppContext.BaseDirectory, "Reports", "RelClientes.frx");
 
@@ -122,12 +122,12 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
 
             report.Load(reportPath);
 
-            report.RegisterData(dados.Take(100), "Clientes");
+            report.RegisterData(dataClient.Take(100), "Clientes");
             report.GetDataSource("Clientes").Enabled = true;
 
-            report.SetParameterValue("FiltroDescricao", ObterDescricaoFiltro(filtro));
-            report.SetParameterValue("IdInicial", filtro.IdInicial?.ToString() ?? "Todos");
-            report.SetParameterValue("IdFinal", filtro.IdFinal?.ToString() ?? "Todos");
+            report.SetParameterValue("FiltroDescricao", GetDescriptionFilter(filter));
+            report.SetParameterValue("IdInicial", filter.IdInicial?.ToString() ?? "Todos");
+            report.SetParameterValue("IdFinal", filter.IdFinal?.ToString() ?? "Todos");
 
             report.Prepare();
 
@@ -150,14 +150,14 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             });
         }
 
-        private string ObterDescricaoFiltro(ClientReportFilterDto filtro)
+        private string GetDescriptionFilter(ClientReportFilterDto filter)
         {
-            if (filtro.Todos) return "Todos os clientes";
+            if (filter.Todos) return "Todos os clientes";
 
             var partes = new List<string>();
 
-            if (filtro.IdInicial.HasValue || filtro.IdFinal.HasValue)
-                partes.Add($"ID: {filtro.IdInicial} até {filtro.IdFinal}");
+            if (filter.IdInicial.HasValue || filter.IdFinal.HasValue)
+                partes.Add($"ID: {filter.IdInicial} até {filter.IdFinal}");
 
             if (_view.ComboState.SelectedValue is int)
                 partes.Add($"Estado: {_view.ComboState.Text}");

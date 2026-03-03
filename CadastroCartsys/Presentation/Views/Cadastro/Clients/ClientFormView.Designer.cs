@@ -630,11 +630,13 @@
             // 
             // dtpDataNascimento
             // 
+            dtpDataNascimento.Checked = false;
             dtpDataNascimento.Dock = DockStyle.Left;
             dtpDataNascimento.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpDataNascimento.Format = DateTimePickerFormat.Short;
+            dtpDataNascimento.Format = DateTimePickerFormat.Custom;
             dtpDataNascimento.Location = new Point(284, 20);
             dtpDataNascimento.Name = "dtpDataNascimento";
+            dtpDataNascimento.ShowCheckBox = true;
             dtpDataNascimento.Size = new Size(270, 29);
             dtpDataNascimento.TabIndex = 6;
             // 

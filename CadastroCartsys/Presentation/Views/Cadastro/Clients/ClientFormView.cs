@@ -121,7 +121,17 @@ namespace CadastroCartsys.Presentation.Views.Clients
             txtBairro.Text = dto.Bairro ?? string.Empty;
             cbxCidade.Text = dto.CidadeNome;
             cbxEstado.Text = dto.EstadoNome;
-            dtpDataNascimento.Value = dto.DataNascimento ?? DateTime.Now.Date;
+
+            if (dto.DataNascimento.HasValue)
+            {
+                dtpDataNascimento.Value = dto.DataNascimento.Value;
+                dtpDataNascimento.Checked = true;
+            }
+            else
+            {
+                dtpDataNascimento.Value = DateTime.Now.Date;
+                dtpDataNascimento.Checked = false;
+            }
         }
 
         public void ClearFields()
@@ -135,6 +145,7 @@ namespace CadastroCartsys.Presentation.Views.Clients
             txtComplemento.Clear();
             txtBairro.Clear();
             dtpDataNascimento.Value = DateTime.Today;
+            dtpDataNascimento.Checked = false;
 
             cbxCidade.DataSource = null;
             cbxCidade.Items.Clear();
@@ -154,7 +165,9 @@ namespace CadastroCartsys.Presentation.Views.Clients
             Bairro = txtBairro.Text.Trim(),
             CidadeNome = cbxCidade.Text.Trim(),
             CidadeId = cbxCidade.SelectedValue is int cidadeId ? cidadeId : 0,
-            DataNascimento = dtpDataNascimento.Value
+            DataNascimento = dtpDataNascimento.Checked
+                ? dtpDataNascimento.Value
+                : null
         };
 
         public void DisplaySuccessMessage(string message)

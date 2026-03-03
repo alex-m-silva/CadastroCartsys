@@ -32,7 +32,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         {
             _view.SetCustomerListBindingSource(_clientBindingSource);
             _view.SearchClientsEvent += SearchinMemory;
-            _view.FilterAlteredEvent += (s, e) => UpdateGrid(_clientsInMemory);
+            _view.FilterAlteredEvent += SearchinMemory;
             _view.ClientSelectionEvent += WhenSelectingClient;
 
             LoadAllClients();
@@ -63,7 +63,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao carregar clientes: {ex.Message}");
+                _view.DisplayErrorMessage($"Erro ao carregar clientes");
             }
         }
         private async void SearchinMemory(object? sender, EventArgs e)
@@ -82,15 +82,9 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
                     var value = propriedade.GetValue(c)?.ToString() ?? string.Empty;
                     return value.ToLower()
                                 .StartsWith(term, StringComparison.OrdinalIgnoreCase);
-                }).Take(1000)
-                .ToList();
+                }).Take(1000);
 
             _clientBindingSource.DataSource = result.ToList();
-        }
-        private void UpdateGrid(IEnumerable<ClientFormDto> clients)
-        {
-            _clientBindingSource.DataSource = 
-                _clientBindingSource.DataSource = clients.ToString();
         }
 
         public void SetCallback(Action<Cliente> callback)

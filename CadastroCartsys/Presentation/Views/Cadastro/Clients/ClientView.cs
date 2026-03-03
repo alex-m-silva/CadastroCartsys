@@ -72,7 +72,6 @@ namespace CadastroCartsys.Presentation.Views
             gridView.DefaultCellStyle.Padding = new Padding(5);
         }
 
-        // Sobrescreve Fun para enter = tab
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Enter)
@@ -103,6 +102,12 @@ namespace CadastroCartsys.Presentation.Views
 
             if (cbxFilter.Items.Count > 0)
                 cbxFilter.SelectedIndex = 0;
+        }
+
+        public void DisplayErrorMessage(string message)
+        {
+            MessageBox.Show(message, "Erro",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
