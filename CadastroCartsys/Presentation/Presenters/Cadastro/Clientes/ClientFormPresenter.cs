@@ -1,12 +1,13 @@
-﻿using CadastroCartsys.Core.DTOs;
+﻿using CadastroCartsys.Common.Extensions;
+using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
-using CadastroCartsys.Presentation.Interfaces;
+using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
 using CadastroCartsys.Presentation.Views;
 using System.Runtime.ConstrainedExecution;
 
-namespace CadastroCartsys.Presentation.Presenters
+namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
 {
     public class ClientFormPresenter
     {
@@ -55,7 +56,14 @@ namespace CadastroCartsys.Presentation.Presenters
             _view.SaveClientEvent += SaveClient;
             _view.FilterCityEvent += FilterCity;
             _view.DeleteClientEvent += DeleteClient;
-            _view.FilterStateEvent += FilterState;
+            _view.FormatCpfCnpjEvent += FormatCpfCnpj;
+        }
+
+        private void FormatCpfCnpj(object? sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_view.CpfCnpj)) return;
+
+            _view.CpfCnpj = _view.CpfCnpj.FormatCpfCnpj();
         }
 
         private async void DeleteClient(object? sender, EventArgs e)
@@ -88,15 +96,15 @@ namespace CadastroCartsys.Presentation.Presenters
             if (!client.CanBeDeleted())
             {
                 _view.DisplayAttentionMessage(
-                    $"O cliente ID {client.Id} não pode ser excluído por questões de segurança.\n\n" +
-                    $"Motivo: ID protegido pelo sistema."
+                    $"O cliente Código {client.Id} não pode ser excluído por questões de segurança.\n\n" +
+                    $"Motivo: Código protegido pelo sistema."
                     );
                 return false;
             }
 
             return _view.ShowConfirmation(
                 $"Confirmar exclusão do cliente:\n\n" +
-                $"ID: {client.Id}\n" +
+                $"Código: {client.Id}\n" +
                 $"Nome: {client.Nome}\n" +
                 $"Esta operação não pode ser desfeita!",
                 "Confirmar Exclusão");
@@ -130,7 +138,9 @@ namespace CadastroCartsys.Presentation.Presenters
                 _view.Estado = _stateCache
                     .FirstOrDefault(e => e.Uf == result.Uf)?
                     .Nome ?? string.Empty;
-                
+
+                _view.Cep = _view.Cep.FormatCep();
+
             }
             catch (ArgumentException ex)
             {
@@ -258,7 +268,7 @@ namespace CadastroCartsys.Presentation.Presenters
 
                 var isInsert = dto.Id == 0;
                 var mensagem = isInsert
-                            ? $"Cliente cadastrado com sucesso! ID: {novoId}"
+                            ? $"Cliente cadastrado com sucesso! Código: {novoId}"
                     : "Cliente atualizado com sucesso!";
 
                 _view.DisplaySuccessMessage(mensagem);
@@ -280,17 +290,7 @@ namespace CadastroCartsys.Presentation.Presenters
             _stateCache = _stateRepository.GetAll().ToList();
             FilterStatesDataSource(_stateCache);
         }
-        private void FilterState(object? sender, EventArgs e)
-        {
-            if (_view.ComboCity.SelectedValue is not int cidadeId)
-            {
-                FilterStatesDataSource(_stateCache);
-                return;
-            }
-
-            var states = _stateCache.Where(x => x.Id == cidadeId).ToList();
-            FilterStatesDataSource(states);
-        }
+        
         private void FilterStatesDataSource (List<Estado> states)
         {
             _view.ComboState.DataSource = states;
@@ -309,8 +309,11 @@ namespace CadastroCartsys.Presentation.Presenters
             if (_view.ComboState.SelectedValue is not int estadoId)
             {
                 FilterCitiesDataSource(_citiesCache);
+                FilterStatesDataSource(_stateCache);
                 return;
             }
+
+            _view.ComboCity.SelectedIndex = -1;
 
             var cities = _citiesCache
                 .Where(x => x.EstadoId == estadoId)
@@ -318,6 +321,7 @@ namespace CadastroCartsys.Presentation.Presenters
 
             FilterCitiesDataSource(cities);
         }
+
         private void FilterCitiesDataSource(IEnumerable<Cidade> cities)
         {
             _view.ComboCity.DataSource = cities;

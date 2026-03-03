@@ -20,5 +20,26 @@ namespace CadastroCartsys.Common.Extensions
 
             return builder.ToString().Normalize(NormalizationForm.FormC);
         }
+
+        public static string FormatCpfCnpj(this string valor)
+        {
+            var digits = new string(valor.Where(char.IsDigit).ToArray());
+
+            return digits.Length switch
+            {
+                11 => $"{digits[..3]}.{digits[3..6]}.{digits[6..9]}-{digits[9..11]}",  // CPF: 000.000.000-00
+                14 => $"{digits[..2]}.{digits[2..5]}.{digits[5..8]}/{digits[8..12]}-{digits[12..14]}", // CNPJ: 00.000.000/0000-00
+                _ => valor 
+            };
+        }
+
+        public static string FormatCep(this string valor)
+        {
+            var digits = new string(valor.Where(char.IsDigit).ToArray());
+
+            return digits.Length == 8
+                ? $"{digits[..5]}-{digits[5..8]}"
+                : valor;
+        }
     }
 }

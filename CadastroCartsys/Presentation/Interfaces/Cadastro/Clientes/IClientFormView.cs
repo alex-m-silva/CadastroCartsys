@@ -1,7 +1,7 @@
 ﻿using CadastroCartsys.Core.DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CadastroCartsys.Presentation.Interfaces
+namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes
 {
     public interface IClientFormView
     {
@@ -9,8 +9,8 @@ namespace CadastroCartsys.Presentation.Interfaces
         event EventHandler LoadSearchClientEvent;
         event EventHandler SaveClientEvent;
         event EventHandler FilterCityEvent;
-        event EventHandler FilterStateEvent;
         event EventHandler DeleteClientEvent;
+        event EventHandler FormatCpfCnpjEvent;
 
         void DisplaySuccessMessage(string message);
         void DisplayErrorMessage(string message);
@@ -24,7 +24,9 @@ namespace CadastroCartsys.Presentation.Interfaces
         ComboBox ComboState { get; }
         ComboBox ComboCity { get; }
 
-        string Cep { get; }
+        string Cep { get; set; }
+        string CpfCnpj { get; set; }
+
         string Endereco { get; set; }
         string Bairro { get; set; }
         string Cidade { get; set; }

@@ -116,7 +116,7 @@
             // panel4
             // 
             panel4.Dock = DockStyle.Left;
-            panel4.Location = new Point(671, 0);
+            panel4.Location = new Point(949, 0);
             panel4.Margin = new Padding(4, 3, 4, 3);
             panel4.Name = "panel4";
             panel4.Size = new Size(10, 31);
@@ -130,7 +130,7 @@
             panel16.Location = new Point(182, 0);
             panel16.Margin = new Padding(4, 3, 4, 3);
             panel16.Name = "panel16";
-            panel16.Size = new Size(489, 31);
+            panel16.Size = new Size(767, 31);
             panel16.TabIndex = 4;
             // 
             // txtTerm
@@ -140,7 +140,7 @@
             txtTerm.Location = new Point(10, 0);
             txtTerm.Margin = new Padding(4, 3, 4, 3);
             txtTerm.Name = "txtTerm";
-            txtTerm.Size = new Size(479, 29);
+            txtTerm.Size = new Size(757, 29);
             txtTerm.TabIndex = 3;
             // 
             // panel17
@@ -377,8 +377,9 @@
             Controls.Add(panel1);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ClientView";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CartSys - Clientes";
+            Text = "CartSys - Pesquisar Clientes";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel11.ResumeLayout(false);

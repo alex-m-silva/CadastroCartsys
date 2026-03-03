@@ -1,6 +1,6 @@
 ﻿using CadastroCartsys.Core.DTOs;
-using CadastroCartsys.Presentation.Interfaces;
-using CadastroCartsys.Presentation.Presenters;
+using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
+using CadastroCartsys.Presentation.Presenters.Cadastro.Clientes;
 
 namespace CadastroCartsys.Presentation.Views.Clients
 {
@@ -18,7 +18,6 @@ namespace CadastroCartsys.Presentation.Views.Clients
         public ComboBox ComboState => cbxEstado;
         public ComboBox ComboCity => cbxCidade;
 
-        public string Cep => txtCep.Text.Trim();
         public string Endereco
         {
             get => txtEndereco.Text;
@@ -40,12 +39,23 @@ namespace CadastroCartsys.Presentation.Views.Clients
             set => cbxEstado.Text = value;
         }
 
+        public string CpfCnpj
+        {
+            get => txtCpfCnpj.Text.Trim();
+            set => txtCpfCnpj.Text = value;
+        }
+        public string Cep
+        {
+            get => txtCep.Text.Trim();
+            set => txtCep.Text = value;
+        }
+
         public event EventHandler SearchCepEvent;
         public event EventHandler LoadSearchClientEvent;
         public event EventHandler SaveClientEvent;
         public event EventHandler FilterCityEvent;
-        public event EventHandler FilterStateEvent;
         public event EventHandler DeleteClientEvent;
+        public event EventHandler FormatCpfCnpjEvent;
 
         private void AssociateEventsHandler()
         {
@@ -68,6 +78,15 @@ namespace CadastroCartsys.Presentation.Views.Clients
                 if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                     e.Handled = true;
             };
+            txtCpfCnpj.KeyPress += (s, e) =>
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                    e.Handled = true;
+            };
+            txtCpfCnpj.Leave += delegate
+            {
+                FormatCpfCnpjEvent?.Invoke(this, EventArgs.Empty);
+            };
 
             btnSave.Click += delegate
             {
@@ -77,19 +96,6 @@ namespace CadastroCartsys.Presentation.Views.Clients
             cbxEstado.SelectionChangeCommitted += delegate
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
-            };
-            cbxEstado.Leave += delegate
-            {
-                FilterCityEvent?.Invoke(this, EventArgs.Empty);
-            };
-            cbxCidade.SelectionChangeCommitted += delegate
-            {
-                if (string.IsNullOrWhiteSpace(cbxEstado.Text))
-                    FilterStateEvent?.Invoke(this, EventArgs.Empty);
-            };
-            cbxCidade.Leave += delegate
-            {
-                FilterStateEvent?.Invoke(this, EventArgs.Empty);
             };
 
             btnCancelar.Click += delegate

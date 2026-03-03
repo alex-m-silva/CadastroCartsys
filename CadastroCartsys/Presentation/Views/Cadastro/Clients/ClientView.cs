@@ -1,7 +1,7 @@
 ﻿using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Domain.Entities;
-using CadastroCartsys.Presentation.Interfaces;
-using CadastroCartsys.Presentation.Presenters;
+using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
+using CadastroCartsys.Presentation.Presenters.Cadastro.Clientes;
 using System.Data.Common;
 
 namespace CadastroCartsys.Presentation.Views
@@ -42,15 +42,18 @@ namespace CadastroCartsys.Presentation.Views
             };
             cbxFilter.SelectionChangeCommitted += delegate
             {
-                if (!string.IsNullOrWhiteSpace(txtTerm.Text))
-                    txtTerm.Text = string.Empty;
+                if (string.IsNullOrWhiteSpace(txtTerm.Text)) return;
 
                 FilterAlteredEvent?.Invoke(this, EventArgs.Empty);
             };
 
             dtgvCustomers.CellDoubleClick += (s, e) =>
             {
-                if (e.RowIndex < 0) return;
+                if (e.RowIndex < 0)
+                    return;
+
+                if (dtgvCustomers.CurrentRow?.DataBoundItem is not ClientFormDto cliente)
+                    return;
 
                 SelectedId = (int)dtgvCustomers.Rows[e.RowIndex].Cells["Column1"].Value;
                 ClientSelectionEvent?.Invoke(this, EventArgs.Empty);

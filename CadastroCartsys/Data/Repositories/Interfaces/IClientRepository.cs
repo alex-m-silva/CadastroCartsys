@@ -7,8 +7,10 @@ namespace CadastroCartsys.Data.Repositories.Interfaces
     {
         Task<List<Cliente>> GetAllAsync();
         Task<Cliente?> GetByIdAsync(int id);
-        Task<IEnumerable<Cliente>> SearchAsync(CustomerFilterDto filtro);
         Task<int> SaveAsync(Cliente cliente);
         Task DeleteAsync(int id);
+
+        Task<IEnumerable<ClientReportDto>> GetReportAsync
+            (ClientReportFilterDto filter;
     }
 }

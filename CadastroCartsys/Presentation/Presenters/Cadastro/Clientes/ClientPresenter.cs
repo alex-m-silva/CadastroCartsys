@@ -2,9 +2,9 @@
 using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
-using CadastroCartsys.Presentation.Interfaces;
+using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
 
-namespace CadastroCartsys.Presentation.Presenters
+namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
 {
     public class ClientPresenter
     {
@@ -60,8 +60,6 @@ namespace CadastroCartsys.Presentation.Presenters
                         EstadoNome = c.Cidade?.Estado?.Nome ?? string.Empty,
                         DataNascimento = c.DataNascimento
                     });
-
-                _clientBindingSource.DataSource = _clientsInMemory.Take(1000);
             }
             catch (Exception ex)
             {
@@ -70,11 +68,7 @@ namespace CadastroCartsys.Presentation.Presenters
         }
         private async void SearchinMemory(object? sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_view.SearchTerm))
-            {
-                _clientBindingSource.DataSource = _clientsInMemory;
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(_view.SearchTerm)) return;
 
             var field = _view.FieldResearch;
             var term = _view.SearchTerm.RemoveAccents().ToLower();
@@ -88,7 +82,7 @@ namespace CadastroCartsys.Presentation.Presenters
                     var value = propriedade.GetValue(c)?.ToString() ?? string.Empty;
                     return value.ToLower()
                                 .StartsWith(term, StringComparison.OrdinalIgnoreCase);
-                })
+                }).Take(1000)
                 .ToList();
 
             _clientBindingSource.DataSource = result.ToList();

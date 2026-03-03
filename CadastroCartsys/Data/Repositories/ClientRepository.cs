@@ -39,7 +39,7 @@ namespace CadastroCartsys.Data.Repositories
                             FROM dbo.CLIENTE c
                             JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
                             JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
-                            ORDER BY c.NOME ASC
+                            ORDER BY c.ID ASC
                             """;
 
             var estadoCache = new Dictionary<int, Estado>();
@@ -185,40 +185,42 @@ namespace CadastroCartsys.Data.Repositories
             return cliente.Id;
         }
 
-        // ClienteRepository
-        public async Task<IEnumerable<Cliente>> SearchAsync(CustomerFilterDto filtro)
+        public async Task<IEnumerable<ClientReportDto>> GetReportAsync(ClientReportFilterDto filter)
         {
             using var connection = _context.CreateConnection();
 
             const string sql = """
                                 SELECT
-                                    v.ID, v.NOME, v.CPF_CNPJ AS CpfCnpj, v.CEP,
-                                    v.ENDERECO, v.NUMERO, v.COMPLEMENTO, v.BAIRRO,
-                                    v.CIDADE_ID, v.CIDADE_NOME,
-                                    v.ESTADO_ID, v.ESTADO_NOME, v.ESTADO_UF,
-                                    v.DATANASCIMENTO
-                                FROM dbo.vw_ClienteCompleto v
+                                    c.ID,
+                                    c.NOME,
+                                    c.CPF_CNPJ  AS CpfCnpj,
+                                    c.CEP,
+                                    c.BAIRRO,
+                                    ci.NOME     AS Cidade,
+                                    e.NOME      AS Estado
+                                FROM dbo.CLIENTE c
+                                JOIN dbo.CIDADE  ci ON ci.ID = c.CIDADE
+                                JOIN dbo.ESTADO  e  ON e.ID  = ci.ESTADOID
                                 WHERE
-                                    (@Id             IS NULL OR CAST(v.ID AS VARCHAR) LIKE @Id             + '%')
-                                    AND (@Nome        IS NULL OR v.NOME                LIKE @Nome           + '%')
-                                    AND (@CpfCnpj     IS NULL OR v.CPF_CNPJ            LIKE @CpfCnpj        + '%')
-                                    AND (@Cep         IS NULL OR v.CEP                 LIKE @Cep            + '%')
-                                    AND (@Cidade      IS NULL OR v.CIDADE_NOME         LIKE @Cidade         + '%')
-                                    AND (@Estado      IS NULL OR v.ESTADO_NOME         LIKE @Estado         + '%'
-                                                             OR v.ESTADO_UF            LIKE @Estado         + '%')
-                                    AND (@DataNasc    IS NULL OR CONVERT(VARCHAR, v.DATANASCIMENTO, 103) LIKE @DataNasc + '%')
-                                ORDER BY v.NOME ASC
+                                    (@Todos = 1
+                                        OR
+                                        (
+                                            (@IdInicial IS NULL OR c.ID >= @IdInicial)
+                                            AND (@IdFinal   IS NULL OR c.ID <= @IdFinal)
+                                            AND (@CidadeId  IS NULL OR c.CIDADE    = @CidadeId)
+                                            AND (@EstadoId  IS NULL OR ci.ESTADOID = @EstadoId)
+                                        )
+                                    )
+                                ORDER BY c.ID ASC
                                 """;
 
-            return await connection.QueryAsync<Cliente>(sql, new
+            return await connection.QueryAsync<ClientReportDto>(sql, new
             {
-                Id = string.IsNullOrWhiteSpace(filtro.Id) ? null : filtro.Id,
-                Nome = string.IsNullOrWhiteSpace(filtro.Nome) ? null : filtro.Nome,
-                CpfCnpj = string.IsNullOrWhiteSpace(filtro.CpfCnpj) ? null : filtro.CpfCnpj,
-                Cep = string.IsNullOrWhiteSpace(filtro.Cep) ? null : filtro.Cep,
-                Cidade = string.IsNullOrWhiteSpace(filtro.Cidade) ? null : filtro.Cidade,
-                Estado = string.IsNullOrWhiteSpace(filtro.Estado) ? null : filtro.Estado,
-                DataNasc = string.IsNullOrWhiteSpace(filtro.DataNascimento) ? null : filtro.DataNascimento
+                Todos = filter.Todos ? 1 : 0,
+                IdInicial = filter.IdInicial,
+                IdFinal = filter.IdFinal,
+                CidadeId = filter.CidadeId,
+                EstadoId = filter.EstadoId
             });
         }
     }

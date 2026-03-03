@@ -6,8 +6,11 @@ using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Infrastructure.ViaCep;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
 using CadastroCartsys.Presentation.Presenters;
+using CadastroCartsys.Presentation.Presenters.Cadastro.Clientes;
+using CadastroCartsys.Presentation.Presenters.Relatorios;
 using CadastroCartsys.Presentation.Views;
 using CadastroCartsys.Presentation.Views.Clients;
+using CadastroCartsys.Presentation.Views.Relatorios;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
@@ -60,11 +63,13 @@ namespace CadastroCartsys
             services.AddTransient<MainView>();
             services.AddTransient<ClientView>();
             services.AddTransient<ClientFormView>();
+            services.AddTransient<ReportView>();
 
-            // Presenters
+            // Presenters            
             services.AddTransient<MainPresenter>();
             services.AddTransient<ClientPresenter>();
             services.AddTransient<ClientFormPresenter>();
+            services.AddTransient<ReportPresenter>();
 
             // Uma função que, quando chamada, retorna uma nova instância
             services.AddSingleton<Func<ClientView>>(provider =>
@@ -83,12 +88,17 @@ namespace CadastroCartsys
                 return view;
             });
 
-            // Program.cs
+            services.AddSingleton<Func<ReportView>>(provider =>
+                () => provider.GetRequiredService<ReportView>());
+
             services.AddHttpClient<ICepService, CepService>(client =>
             {
                 client.BaseAddress = new Uri("https://viacep.com.br/");
                 client.Timeout = TimeSpan.FromSeconds(10);
             });
+
+            services.AddSingleton<Func<ReportView>>(provider =>
+                () => provider.GetRequiredService<ReportView>());
 
             //Mapping
             CidadeMap.Register();

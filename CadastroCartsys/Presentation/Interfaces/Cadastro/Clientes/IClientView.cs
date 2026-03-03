@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CadastroCartsys.Presentation.Interfaces
+namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes
 {
     public interface IClientView
     {

@@ -946,7 +946,7 @@
             Name = "ClientFormView";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Cadastrar Cliente";
+            Text = "CartSys - Cadastrar Cliente";
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             panel41.ResumeLayout(false);
