@@ -59,5 +59,25 @@ namespace CadastroCartsys.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_back_icon_151627 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_back_icon_151627", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap seo_social_web_network_internet_340_icon_icons_com_61497 {
+            get {
+                object obj = ResourceManager.GetObject("seo-social-web-network-internet_340_icon-icons.com_61497", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

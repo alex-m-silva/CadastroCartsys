@@ -153,12 +153,13 @@
             // 
             // btnSearch
             // 
-            btnSearch.BackColor = Color.White;
+            btnSearch.BackColor = Color.WhiteSmoke;
             btnSearch.BackgroundImageLayout = ImageLayout.Center;
             btnSearch.Dock = DockStyle.Left;
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnSearch.Image = Properties.Resources.seo_social_web_network_internet_340_icon_icons_com_61497;
             btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
             btnSearch.Location = new Point(114, 0);
             btnSearch.Name = "btnSearch";
@@ -178,11 +179,12 @@
             // 
             // btnClose
             // 
-            btnClose.BackColor = Color.White;
+            btnClose.BackColor = Color.WhiteSmoke;
             btnClose.Dock = DockStyle.Left;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnClose.Image = Properties.Resources.arrow_back_icon_151627;
             btnClose.ImageAlign = ContentAlignment.MiddleLeft;
             btnClose.Location = new Point(10, 0);
             btnClose.Name = "btnClose";

@@ -54,6 +54,7 @@ namespace CadastroCartsys
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
+            services.AddScoped<IAuditClientRepository, AuditClientRepository>();
 
             // Services
             //services.AddScoped<IClienteService, ClienteService>();

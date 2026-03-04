@@ -14,7 +14,7 @@ namespace CadastroCartsys.Data.Repositories
             _context = context;
         }
 
-        public IEnumerable<Estado> GetAll()
+        public async Task<IEnumerable<Estado>> GetAllAsync()
         {
             using var connection = _context.CreateConnection();
 
@@ -27,7 +27,7 @@ namespace CadastroCartsys.Data.Repositories
             ORDER BY NOME ASC
             """;
 
-            return connection.Query<Estado>(sql);
+            return await connection.QueryAsync<Estado>(sql);
         }
     }
 }

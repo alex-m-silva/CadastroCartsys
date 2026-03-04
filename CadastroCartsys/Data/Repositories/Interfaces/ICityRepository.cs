@@ -4,6 +4,6 @@ namespace CadastroCartsys.Data.Repositories.Interfaces
 {
     public interface ICityRepository
     {
-        IEnumerable<Cidade> GetAll();
+        Task<IEnumerable<Cidade>> GetAllAsync();
     }
 }

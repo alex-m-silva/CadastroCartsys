@@ -57,10 +57,14 @@
             label4 = new Label();
             panel19 = new Panel();
             panel43 = new Panel();
-            btnCancelar = new Button();
+            btnClear = new Button();
             panel48 = new Panel();
             btnGerar = new Button();
             panel4 = new Panel();
+            panel8 = new Panel();
+            btnClose = new Button();
+            panel14 = new Panel();
+            panel15 = new Panel();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
             panel3.SuspendLayout();
@@ -74,15 +78,16 @@
             panel24.SuspendLayout();
             panel22.SuspendLayout();
             panel43.SuspendLayout();
+            panel8.SuspendLayout();
             SuspendLayout();
             // 
             // panel5
             // 
             panel5.Controls.Add(panel6);
             panel5.Dock = DockStyle.Top;
-            panel5.Location = new Point(0, 0);
+            panel5.Location = new Point(0, 33);
             panel5.Name = "panel5";
-            panel5.Size = new Size(443, 55);
+            panel5.Size = new Size(464, 55);
             panel5.TabIndex = 4;
             // 
             // panel6
@@ -97,14 +102,14 @@
             panel6.Dock = DockStyle.Top;
             panel6.Location = new Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new Size(443, 50);
+            panel6.Size = new Size(464, 50);
             panel6.TabIndex = 4;
             // 
             // panel3
             // 
             panel3.Controls.Add(chTodos);
             panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(275, 20);
+            panel3.Location = new Point(325, 20);
             panel3.Name = "panel3";
             panel3.Size = new Size(159, 30);
             panel3.TabIndex = 11;
@@ -124,7 +129,7 @@
             // panel2
             // 
             panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(265, 20);
+            panel2.Location = new Point(315, 20);
             panel2.Name = "panel2";
             panel2.Size = new Size(10, 30);
             panel2.TabIndex = 10;
@@ -133,17 +138,17 @@
             // 
             txtIdFinal.Dock = DockStyle.Left;
             txtIdFinal.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtIdFinal.Location = new Point(150, 20);
+            txtIdFinal.Location = new Point(175, 20);
             txtIdFinal.MaxLength = 80;
             txtIdFinal.Name = "txtIdFinal";
-            txtIdFinal.Size = new Size(115, 29);
+            txtIdFinal.Size = new Size(140, 29);
             txtIdFinal.TabIndex = 2;
             // 
             // panel11
             // 
             panel11.Controls.Add(label3);
             panel11.Dock = DockStyle.Left;
-            panel11.Location = new Point(125, 20);
+            panel11.Location = new Point(150, 20);
             panel11.Name = "panel11";
             panel11.Size = new Size(25, 30);
             panel11.TabIndex = 6;
@@ -165,7 +170,7 @@
             txtIdInicial.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtIdInicial.Location = new Point(10, 20);
             txtIdInicial.Name = "txtIdInicial";
-            txtIdInicial.Size = new Size(115, 29);
+            txtIdInicial.Size = new Size(140, 29);
             txtIdInicial.TabIndex = 1;
             // 
             // panel7
@@ -176,16 +181,16 @@
             panel7.Dock = DockStyle.Top;
             panel7.Location = new Point(10, 0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(433, 20);
+            panel7.Size = new Size(454, 20);
             panel7.TabIndex = 4;
             // 
             // panel13
             // 
             panel13.Controls.Add(label2);
             panel13.Dock = DockStyle.Left;
-            panel13.Location = new Point(139, 0);
+            panel13.Location = new Point(165, 0);
             panel13.Name = "panel13";
-            panel13.Size = new Size(116, 20);
+            panel13.Size = new Size(150, 20);
             panel13.TabIndex = 2;
             // 
             // label2
@@ -202,7 +207,7 @@
             // panel12
             // 
             panel12.Dock = DockStyle.Left;
-            panel12.Location = new Point(114, 0);
+            panel12.Location = new Point(140, 0);
             panel12.Name = "panel12";
             panel12.Size = new Size(25, 20);
             panel12.TabIndex = 1;
@@ -213,7 +218,7 @@
             panel10.Dock = DockStyle.Left;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(114, 20);
+            panel10.Size = new Size(140, 20);
             panel10.TabIndex = 0;
             // 
             // label1
@@ -239,9 +244,9 @@
             // 
             panel17.Controls.Add(panel18);
             panel17.Dock = DockStyle.Top;
-            panel17.Location = new Point(0, 55);
+            panel17.Location = new Point(0, 88);
             panel17.Name = "panel17";
-            panel17.Size = new Size(443, 55);
+            panel17.Size = new Size(464, 55);
             panel17.TabIndex = 5;
             // 
             // panel18
@@ -254,7 +259,7 @@
             panel18.Dock = DockStyle.Top;
             panel18.Location = new Point(0, 0);
             panel18.Name = "panel18";
-            panel18.Size = new Size(443, 50);
+            panel18.Size = new Size(464, 50);
             panel18.TabIndex = 4;
             // 
             // cbxCidade
@@ -265,15 +270,15 @@
             cbxCidade.FormattingEnabled = true;
             cbxCidade.IntegralHeight = false;
             cbxCidade.ItemHeight = 21;
-            cbxCidade.Location = new Point(227, 20);
+            cbxCidade.Location = new Point(242, 20);
             cbxCidade.Name = "cbxCidade";
-            cbxCidade.Size = new Size(207, 29);
+            cbxCidade.Size = new Size(215, 29);
             cbxCidade.TabIndex = 5;
             // 
             // panel9
             // 
             panel9.Dock = DockStyle.Left;
-            panel9.Location = new Point(217, 20);
+            panel9.Location = new Point(232, 20);
             panel9.Name = "panel9";
             panel9.Size = new Size(10, 30);
             panel9.TabIndex = 10;
@@ -287,7 +292,7 @@
             cbxEstado.IntegralHeight = false;
             cbxEstado.Location = new Point(10, 20);
             cbxEstado.Name = "cbxEstado";
-            cbxEstado.Size = new Size(207, 29);
+            cbxEstado.Size = new Size(222, 29);
             cbxEstado.TabIndex = 4;
             // 
             // panel21
@@ -298,14 +303,14 @@
             panel21.Dock = DockStyle.Top;
             panel21.Location = new Point(10, 0);
             panel21.Name = "panel21";
-            panel21.Size = new Size(433, 20);
+            panel21.Size = new Size(454, 20);
             panel21.TabIndex = 4;
             // 
             // panel24
             // 
             panel24.Controls.Add(label5);
             panel24.Dock = DockStyle.Left;
-            panel24.Location = new Point(217, 0);
+            panel24.Location = new Point(232, 0);
             panel24.Name = "panel24";
             panel24.Size = new Size(207, 20);
             panel24.TabIndex = 10;
@@ -324,7 +329,7 @@
             // panel25
             // 
             panel25.Dock = DockStyle.Left;
-            panel25.Location = new Point(207, 0);
+            panel25.Location = new Point(222, 0);
             panel25.Name = "panel25";
             panel25.Size = new Size(10, 20);
             panel25.TabIndex = 9;
@@ -335,7 +340,7 @@
             panel22.Dock = DockStyle.Left;
             panel22.Location = new Point(0, 0);
             panel22.Name = "panel22";
-            panel22.Size = new Size(207, 20);
+            panel22.Size = new Size(222, 20);
             panel22.TabIndex = 8;
             // 
             // label4
@@ -359,29 +364,29 @@
             // 
             // panel43
             // 
-            panel43.Controls.Add(btnCancelar);
+            panel43.Controls.Add(btnClear);
             panel43.Controls.Add(panel48);
             panel43.Controls.Add(btnGerar);
             panel43.Controls.Add(panel4);
             panel43.Dock = DockStyle.Top;
-            panel43.Location = new Point(0, 110);
+            panel43.Location = new Point(0, 143);
             panel43.Name = "panel43";
-            panel43.Size = new Size(443, 30);
+            panel43.Size = new Size(464, 30);
             panel43.TabIndex = 16;
             // 
-            // btnCancelar
+            // btnClear
             // 
-            btnCancelar.BackColor = Color.Orange;
-            btnCancelar.Dock = DockStyle.Left;
-            btnCancelar.FlatAppearance.BorderSize = 0;
-            btnCancelar.FlatStyle = FlatStyle.Flat;
-            btnCancelar.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnCancelar.Location = new Point(179, 0);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(162, 30);
-            btnCancelar.TabIndex = 7;
-            btnCancelar.Text = "Limpar Filtros";
-            btnCancelar.UseVisualStyleBackColor = false;
+            btnClear.BackColor = Color.Orange;
+            btnClear.Dock = DockStyle.Left;
+            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnClear.Location = new Point(179, 0);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(162, 30);
+            btnClear.TabIndex = 7;
+            btnClear.Text = "Limpar Filtros";
+            btnClear.UseVisualStyleBackColor = false;
             // 
             // panel48
             // 
@@ -414,14 +419,61 @@
             panel4.Size = new Size(10, 30);
             panel4.TabIndex = 1;
             // 
+            // panel8
+            // 
+            panel8.BackColor = Color.WhiteSmoke;
+            panel8.Controls.Add(btnClose);
+            panel8.Controls.Add(panel14);
+            panel8.Dock = DockStyle.Top;
+            panel8.Location = new Point(0, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(464, 28);
+            panel8.TabIndex = 17;
+            // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.WhiteSmoke;
+            btnClose.Dock = DockStyle.Left;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnClose.Image = Properties.Resources.arrow_back_icon_151627;
+            btnClose.ImageAlign = ContentAlignment.MiddleLeft;
+            btnClose.Location = new Point(10, 0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(89, 28);
+            btnClose.TabIndex = 2;
+            btnClose.Text = "Voltar";
+            btnClose.TextAlign = ContentAlignment.MiddleRight;
+            btnClose.UseVisualStyleBackColor = false;
+            // 
+            // panel14
+            // 
+            panel14.Dock = DockStyle.Left;
+            panel14.Location = new Point(0, 0);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(10, 28);
+            panel14.TabIndex = 10;
+            // 
+            // panel15
+            // 
+            panel15.Dock = DockStyle.Top;
+            panel15.Location = new Point(0, 28);
+            panel15.Name = "panel15";
+            panel15.Size = new Size(464, 5);
+            panel15.TabIndex = 18;
+            // 
             // ReportView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(443, 147);
+            BackColor = Color.White;
+            ClientSize = new Size(464, 177);
             Controls.Add(panel43);
             Controls.Add(panel17);
             Controls.Add(panel5);
+            Controls.Add(panel15);
+            Controls.Add(panel8);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ReportView";
@@ -448,6 +500,7 @@
             panel22.ResumeLayout(false);
             panel22.PerformLayout();
             panel43.ResumeLayout(false);
+            panel8.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -482,9 +535,13 @@
         private CheckBox chTodos;
         private Panel panel2;
         private Panel panel43;
-        private Button btnCancelar;
+        private Button btnClear;
         private Panel panel48;
         private Button btnGerar;
         private Panel panel4;
+        private Panel panel8;
+        private Button btnClose;
+        private Panel panel14;
+        private Panel panel15;
     }
 }

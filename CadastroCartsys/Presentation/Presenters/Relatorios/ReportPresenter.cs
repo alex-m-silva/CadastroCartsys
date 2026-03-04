@@ -13,8 +13,8 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
         private readonly ICityRepository _cityRepository;
         private IReportView _view = null!;
 
-        private List<Estado> _stateCache = [];
-        private List<Cidade> _citiesCache = [];
+        private IEnumerable<Estado> _stateCache = [];
+        private IEnumerable<Cidade> _citiesCache = [];
 
         public ReportPresenter(
             IClientRepository clientRepository,
@@ -40,12 +40,12 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             _view.FilterCityEvent += FilterCity;
         }
 
-        private void LoadRegion()
+        private async void LoadRegion()
         {
-            _stateCache = _stateRepository.GetAll().ToList();
-            _citiesCache = _cityRepository.GetAll().ToList();
+            _stateCache = await _stateRepository.GetAllAsync();
+            _citiesCache = await _cityRepository.GetAllAsync();
 
-            _view.ComboState.DataSource = _stateCache;
+            _view.ComboState.DataSource = _stateCache.ToList();
             _view.ComboState.DisplayMember = nameof(Estado.Nome);
             _view.ComboState.ValueMember = nameof(Estado.Id);
             _view.ComboState.SelectedIndex = -1;

@@ -1,4 +1,5 @@
-﻿using CadastroCartsys.Core.DTOs;
+﻿using CadastroCartsys.Common.Extensions;
+using CadastroCartsys.Core.DTOs;
 using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
 using CadastroCartsys.Presentation.Presenters.Cadastro.Clientes;
 
@@ -158,7 +159,7 @@ namespace CadastroCartsys.Presentation.Views.Clients
             Id = int.TryParse(txtCodigo.Text, out var id) ? id : 0,
             Nome = txtNome.Text.Trim(),
             CpfCnpj = txtCpfCnpj.Text.Trim(),
-            Cep = txtCep.Text.Trim(),
+            Cep = string.IsNullOrWhiteSpace(txtCep.Text) ? null : txtCep.Text.OnlyDigits(),
             Endereco = txtEndereco.Text.Trim(),
             Numero = txtNumero.Text.Trim(),
             Complemento = txtComplemento.Text.Trim(),

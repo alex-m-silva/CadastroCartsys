@@ -57,6 +57,11 @@ namespace CadastroCartsys.Presentation.Views
                 ClientSelectionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             };
+
+            btnClose.Click += delegate
+            {
+                this.Close();
+            };
         }
 
         public void SetCustomerListBindingSource(BindingSource source)

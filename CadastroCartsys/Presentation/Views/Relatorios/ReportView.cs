@@ -59,6 +59,14 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
             };
+            btnClear.Click += delegate
+            {
+                ClearFields();
+            };
+            btnClose.Click += delegate
+            {
+                this.Close();
+            };
         }
 
         // Sobrescreve Fun para enter = tab
@@ -76,6 +84,17 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
         public void DisplayErrorMessage(string message)
         {
             MessageBox.Show(message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ClearFields()
+        {
+            txtIdInicial.Clear();
+            txtIdFinal.Clear();
+            cbxEstado.Text = "";
+            cbxCidade.Text = "";
+            cbxEstado.SelectedIndex = -1;
+            cbxCidade.SelectedIndex = -1;
+            chTodos.Checked = false;
         }
     }
 }

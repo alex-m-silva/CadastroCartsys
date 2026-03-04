@@ -1,11 +1,14 @@
 ﻿using CadastroCartsys.Common.Extensions;
 using CadastroCartsys.Core.DTOs;
+using CadastroCartsys.Core.Enums;
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Infrastructure.ViaCep.Interfaces;
 using CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes;
 using CadastroCartsys.Presentation.Views;
+using Microsoft.CodeAnalysis;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.AxHost;
 
 namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
@@ -15,12 +18,13 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         private readonly IClientRepository _clientRepository;
         private readonly ICityRepository _cityRepository;
         private readonly IStateRepository _stateRepository;
+        private readonly IAuditClientRepository _auditRepository;
 
         private readonly Func<Action<Cliente>, ClientView> _clientFactory;
 
         private readonly ICepService _cepService;
 
-        private List<Estado> _stateCache = [];
+        private IEnumerable<Estado> _stateCache = [];
         private IEnumerable<Cidade> _citiesCache = [];
 
         private ClientView? _customerForm;
@@ -30,6 +34,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             IClientRepository clientRepository,
             ICityRepository cityRepository,
             IStateRepository stateRepository,
+            IAuditClientRepository auditRepository,
             ICepService cepService,
             Func<Action<Cliente>, ClientView> clientFactory
             )
@@ -37,6 +42,7 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             _clientRepository = clientRepository;
             _cityRepository = cityRepository;
             _stateRepository = stateRepository;
+            _auditRepository = auditRepository;
             _cepService = cepService;
 
             _clientFactory = clientFactory;
@@ -76,16 +82,16 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
                 _view.DisplayAttentionMessage("Nenhum cliente selecionado para exclusão.");
                 return;
             }
-
             var client = await _clientRepository.GetByIdAsync(dto.Id);
 
             if (!ValidateClientExclusion(client)) return;
+
+            await _auditRepository.LogAsync(client!, AuditAction.Delete);
 
             await _clientRepository.DeleteAsync(client!.Id);
             _view.DisplaySuccessMessage($"Cliente {client.Nome} excluído com sucesso!");
             _view.ClearFields();
         }
-
         private bool ValidateClientExclusion(Cliente? client)
         {
             if (client == null)
@@ -234,42 +240,34 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
         {
             try
             {
-                var dto = _view.GetForm();
+                var form = _view.GetForm();
 
-                if (string.IsNullOrWhiteSpace(dto.Nome))
-                {
-                    _view.DisplayAttentionMessage("Nome é obrigatório.");
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(dto.CpfCnpj))
-                {
-                    _view.DisplayAttentionMessage("CPF/CNPJ é obrigatório.");
-                    return;
-                }
-                if(dto.CidadeId == 0)
-                {
-                    _view.DisplayAttentionMessage
-                        ($"A cidade {dto.EstadoNome}: {dto.CidadeNome} não está cadastrada no sistema.\n" +
-                          "Entre em contato com o administrador.");
-                    return;
-                }
+                if (!ValidateClientSave(form)) return;
 
                 var client = new Cliente(
-                    dto.Id,
-                    dto.Nome,
-                    dto.CpfCnpj.OnlyDigits(),
-                    dto.CidadeId,
-                    dto.Cep.OnlyDigits(),
-                    dto.Endereco,
-                    dto.Numero,
-                    dto.Complemento,
-                    dto.Bairro,
-                    dto.DataNascimento
+                    form.Id,
+                    form.Nome,
+                    form.CpfCnpj.OnlyDigits(),
+                    form.CidadeId,
+                    form.Cep.OnlyDigits(),
+                    form.Endereco,
+                    form.Numero,
+                    form.Complemento,
+                    form.Bairro,
+                    form.DataNascimento
                 );
 
                 var newId = await _clientRepository.SaveAsync(client);
 
-                var isInsert = dto.Id == 0;
+                var isInsert = form.Id == 0;
+
+                var clientSave = await _clientRepository.GetByIdAsync(newId);
+
+                await _auditRepository.LogAsync(
+                    clientSave,
+                    isInsert ? AuditAction.Insert : AuditAction.Update
+);
+
                 var message = isInsert
                             ? $"Cliente cadastrado com sucesso! Código: {newId}"
                     : "Cliente atualizado com sucesso!";
@@ -288,10 +286,64 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             }
         }
 
-        private void LoadStates()
+        private bool ValidateClientSave(ClientFormDto clientForm)
         {
-            _stateCache = _stateRepository.GetAll().ToList();
-            FilterStatesDataSource(_stateCache);
+            if (string.IsNullOrWhiteSpace(clientForm.Nome))
+            {
+                _view.DisplayAttentionMessage("Nome é obrigatório.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(clientForm.CpfCnpj))
+            {
+                _view.DisplayAttentionMessage("CPF/CNPJ é obrigatório.");
+                return false;
+            }
+
+            var digits = clientForm.CpfCnpj.OnlyDigits();
+            if (digits.Length != 11 && digits.Length != 14)
+            {
+                _view.DisplayErrorMessage(
+                    "CPF deve conter 11 dígitos ou CNPJ deve conter 14 dígitos.");
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientForm.Cep))
+            {
+                var cepDigits = clientForm.Cep.OnlyDigits();
+                if (cepDigits.Length != 8)
+                {
+                    _view.DisplayErrorMessage("CEP deve conter 8 dígitos.");
+                    return false;
+                }
+            }
+
+            if (clientForm.CidadeId == 0 && !string.IsNullOrWhiteSpace(clientForm.CidadeNome))
+            {
+                var location = !string.IsNullOrWhiteSpace(clientForm.EstadoNome)
+                    ? $"{clientForm.EstadoNome}: {clientForm.CidadeNome}"
+                    : clientForm.CidadeNome;
+
+                _view.DisplayAttentionMessage(
+                    $"A cidade '{location}' não está cadastrada no sistema.\n" +
+                    "Entre em contato com o administrador.");
+
+                return false;
+            }
+            if (clientForm.CidadeId == 0)
+            {
+                _view.DisplayAttentionMessage(
+                    $"Cidade é obrigatória.");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private async void LoadStates()
+        {
+            _stateCache = await _stateRepository.GetAllAsync();
+            FilterStatesDataSource(_stateCache.ToList());
         }
 
         private void FilterStatesDataSource(List<Estado> states)
@@ -302,17 +354,17 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             _view.ComboState.SelectedIndex = -1;
         }
 
-        private void LoadCities()
+        private async void LoadCities()
         {
-            _citiesCache = _cityRepository.GetAll().ToList();
-            FilterCitiesDataSource(_citiesCache);
+            _citiesCache = await _cityRepository.GetAllAsync();
+            FilterCitiesDataSource(_citiesCache.ToList());
         }
         private void FilterCity(object? sender, EventArgs e)
         {
             if (_view.ComboState.SelectedValue is not int stateId)
             {
-                FilterCitiesDataSource(_citiesCache);
-                FilterStatesDataSource(_stateCache);
+                FilterCitiesDataSource(_citiesCache.ToList());
+                FilterStatesDataSource(_stateCache.ToList());
                 return;
             }
 

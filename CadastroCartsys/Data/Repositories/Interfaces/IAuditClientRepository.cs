@@ -1,4 +1,5 @@
-﻿using CadastroCartsys.Domain.Entities;
+﻿using CadastroCartsys.Core.Enums;
+using CadastroCartsys.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CadastroCartsys.Data.Repositories.Interfaces
 {
-    public interface IStateRepository
+    public interface IAuditClientRepository
     {
-        Task<IEnumerable<Estado>> GetAllAsync();
+        Task LogAsync(Cliente cliente, AuditAction action);
     }
 }

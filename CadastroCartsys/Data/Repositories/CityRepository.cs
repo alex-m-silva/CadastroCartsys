@@ -14,7 +14,7 @@ namespace CadastroCartsys.Data.Repositories
             _context = context;
         }
 
-        public IEnumerable<Cidade> GetAll()
+        public async Task<IEnumerable<Cidade>> GetAllAsync()
         {
             using var connection = _context.CreateConnection();
 
@@ -31,7 +31,7 @@ namespace CadastroCartsys.Data.Repositories
                                     ORDER BY c.NOME ASC
                                     """;
 
-            return connection.Query<Cidade, Estado, Cidade>(
+            return await connection.QueryAsync<Cidade, Estado, Cidade>(
                 sql,
                 map: (cidade, estado) => new Cidade(cidade.Id, cidade.Nome, estado.Id, estado),
                 splitOn: "ESTADO_ID"
