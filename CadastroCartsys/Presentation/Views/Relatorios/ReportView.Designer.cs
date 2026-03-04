@@ -58,11 +58,11 @@
             panel19 = new Panel();
             panel43 = new Panel();
             btnClear = new Button();
-            panel48 = new Panel();
             btnGerar = new Button();
             panel4 = new Panel();
+            panel48 = new Panel();
             panel8 = new Panel();
-            btnClose = new Button();
+            label6 = new Label();
             panel14 = new Panel();
             panel15 = new Panel();
             panel5.SuspendLayout();
@@ -365,9 +365,9 @@
             // panel43
             // 
             panel43.Controls.Add(btnClear);
-            panel43.Controls.Add(panel48);
             panel43.Controls.Add(btnGerar);
             panel43.Controls.Add(panel4);
+            panel43.Controls.Add(panel48);
             panel43.Dock = DockStyle.Top;
             panel43.Location = new Point(0, 143);
             panel43.Name = "panel43";
@@ -381,30 +381,22 @@
             btnClear.FlatAppearance.BorderSize = 0;
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnClear.Location = new Point(179, 0);
+            btnClear.Location = new Point(10, 0);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(162, 30);
             btnClear.TabIndex = 7;
             btnClear.Text = "Limpar Filtros";
             btnClear.UseVisualStyleBackColor = false;
             // 
-            // panel48
-            // 
-            panel48.Dock = DockStyle.Left;
-            panel48.Location = new Point(169, 0);
-            panel48.Name = "panel48";
-            panel48.Size = new Size(10, 30);
-            panel48.TabIndex = 8;
-            // 
             // btnGerar
             // 
             btnGerar.BackColor = Color.Green;
-            btnGerar.Dock = DockStyle.Left;
+            btnGerar.Dock = DockStyle.Right;
             btnGerar.FlatAppearance.BorderSize = 0;
             btnGerar.FlatStyle = FlatStyle.Flat;
             btnGerar.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGerar.ForeColor = Color.White;
-            btnGerar.Location = new Point(10, 0);
+            btnGerar.Location = new Point(295, 0);
             btnGerar.Name = "btnGerar";
             btnGerar.Size = new Size(159, 30);
             btnGerar.TabIndex = 6;
@@ -419,10 +411,18 @@
             panel4.Size = new Size(10, 30);
             panel4.TabIndex = 1;
             // 
+            // panel48
+            // 
+            panel48.Dock = DockStyle.Right;
+            panel48.Location = new Point(454, 0);
+            panel48.Name = "panel48";
+            panel48.Size = new Size(10, 30);
+            panel48.TabIndex = 8;
+            // 
             // panel8
             // 
-            panel8.BackColor = Color.WhiteSmoke;
-            panel8.Controls.Add(btnClose);
+            panel8.BackColor = Color.White;
+            panel8.Controls.Add(label6);
             panel8.Controls.Add(panel14);
             panel8.Dock = DockStyle.Top;
             panel8.Location = new Point(0, 0);
@@ -430,22 +430,17 @@
             panel8.Size = new Size(464, 28);
             panel8.TabIndex = 17;
             // 
-            // btnClose
+            // label6
             // 
-            btnClose.BackColor = Color.WhiteSmoke;
-            btnClose.Dock = DockStyle.Left;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnClose.Image = Properties.Resources.arrow_back_icon_151627;
-            btnClose.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClose.Location = new Point(10, 0);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(89, 28);
-            btnClose.TabIndex = 2;
-            btnClose.Text = "Voltar";
-            btnClose.TextAlign = ContentAlignment.MiddleRight;
-            btnClose.UseVisualStyleBackColor = false;
+            label6.AutoSize = true;
+            label6.Dock = DockStyle.Left;
+            label6.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            label6.Location = new Point(10, 0);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(159, 25);
+            label6.TabIndex = 11;
+            label6.Text = "Relatorio clientes";
             // 
             // panel14
             // 
@@ -467,7 +462,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(464, 177);
             Controls.Add(panel43);
             Controls.Add(panel17);
@@ -502,6 +497,7 @@
             panel22.PerformLayout();
             panel43.ResumeLayout(false);
             panel8.ResumeLayout(false);
+            panel8.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -541,8 +537,8 @@
         private Button btnGerar;
         private Panel panel4;
         private Panel panel8;
-        private Button btnClose;
         private Panel panel14;
         private Panel panel15;
+        private Label label6;
     }
 }

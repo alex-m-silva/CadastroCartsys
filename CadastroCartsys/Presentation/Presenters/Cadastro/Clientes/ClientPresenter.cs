@@ -9,12 +9,12 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
     public class ClientPresenter
     {
         private readonly IClientRepository _clientRepository;
-        private IClientView _view = null!;
-
-        private Action<Cliente>? _onSelectedClient;
 
         private IEnumerable<ClientFormDto> _clientsInMemory = [];
         private readonly BindingSource _clientBindingSource = [];
+
+        private IClientView _view = null!;
+        private Action<Cliente>? _onSelectedClient;
 
         public ClientPresenter(IClientRepository clientRepository)
         {
@@ -87,16 +87,16 @@ namespace CadastroCartsys.Presentation.Presenters.Cadastro.Clientes
             _clientBindingSource.DataSource = result.ToList();
         }
 
-        public void SetCallback(Action<Cliente> callback)
-        {
-            _onSelectedClient = callback;
-        }
         private async void WhenSelectingClient(object? sender, EventArgs e)
         {
             var client = await _clientRepository.GetByIdAsync(_view.SelectedId.Value);
             if (client is null) return;
 
             _onSelectedClient?.Invoke(client);
+        }
+        public void SetCallback(Action<Cliente> callback)
+        {
+            _onSelectedClient = callback;
         }
     }
 }

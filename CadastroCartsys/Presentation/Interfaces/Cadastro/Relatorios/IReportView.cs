@@ -9,15 +9,15 @@ namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Relatorios
 {
     public interface IReportView
     {
-        event EventHandler GenerateEventReport;
-        event EventHandler FilterCityEvent;
-
         int? IdInitial { get; }
         int? IdEnd { get; }
         bool All { get; }
 
         ComboBox ComboState { get; }
         ComboBox ComboCity { get; }
+
+        event EventHandler GenerateEventReport;
+        event EventHandler FilterCityEvent;
 
         void DisplayErrorMessage(string message);
     }

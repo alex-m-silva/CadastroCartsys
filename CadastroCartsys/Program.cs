@@ -13,7 +13,6 @@ using CadastroCartsys.Presentation.Views.Clients;
 using CadastroCartsys.Presentation.Views.Relatorios;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 
 namespace CadastroCartsys
 {
@@ -37,7 +36,6 @@ namespace CadastroCartsys
         }
         private static void ConfigureServices(IServiceCollection services)
         {
-            // Configuration
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -46,18 +44,15 @@ namespace CadastroCartsys
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            // Singleton pois cria uma única instância durante toda a execução da aplicação
+            // Singleton pois cria uma única instancia durante "toda" a execução da aplicação
             services.AddSingleton<DbContext>();
 
-            // Scoped pois Cria uma instância por escopo
+            // Scoped pois Cria uma instancia por escopo
             // Repositories
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
             services.AddScoped<IAuditClientRepository, AuditClientRepository>();
-
-            // Services
-            //services.AddScoped<IClienteService, ClienteService>();
 
             // Transient pois cada abertura é uma nova instância
             // Forms 

@@ -34,10 +34,17 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
 
         private void AssociateEventsHandler()
         {
-            btnGerar.Click += delegate
+            txtIdInicial.KeyPress += (s, e) =>
             {
-                GenerateEventReport?.Invoke(this, EventArgs.Empty);
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                    e.Handled = true;
             };
+            txtIdFinal.KeyPress += (s, e) =>
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                    e.Handled = true;
+            };
+            
             chTodos.CheckedChanged += delegate
             {
                 ToggleFiltros(!chTodos.Checked);
@@ -47,21 +54,15 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
             };
+
             btnClear.Click += delegate
             {
                 ClearFields();
             };
-            btnClose.Click += delegate
+            btnGerar.Click += delegate
             {
-                this.Close();
+                GenerateEventReport?.Invoke(this, EventArgs.Empty);
             };
-        }
-        private void ToggleFiltros(bool habilitado)
-        {
-            txtIdInicial.Enabled = habilitado;
-            txtIdFinal.Enabled = habilitado;
-            cbxEstado.Enabled = habilitado;
-            cbxCidade.Enabled = habilitado;
         }
 
         private void ClearFields()
@@ -75,13 +76,19 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             chTodos.Checked = false;
             ToggleFiltros(true);
         }
+        private void ToggleFiltros(bool habilitado)
+        {
+            txtIdInicial.Enabled = habilitado;
+            txtIdFinal.Enabled = habilitado;
+            cbxEstado.Enabled = habilitado;
+            cbxCidade.Enabled = habilitado;
+        }
 
         public void DisplayErrorMessage(string message)
         {
             MessageBox.Show(message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        // Sobrescreve Fun para enter = tab
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Enter)

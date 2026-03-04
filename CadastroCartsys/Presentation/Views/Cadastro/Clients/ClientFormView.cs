@@ -16,9 +16,28 @@ namespace CadastroCartsys.Presentation.Views.Clients
             _presenter.SetView(this);
             AssociateEventsHandler();
         }
-        public ComboBox ComboState => cbxEstado;
-        public ComboBox ComboCity => cbxCidade;
 
+        public string CpfCnpj
+        {
+            get => txtCpfCnpj.Text.Trim();
+            set => txtCpfCnpj.Text = value;
+        }
+
+        public string Cep
+        {
+            get => txtCep.Text.Trim();
+            set => txtCep.Text = value;
+        }
+        public string Estado
+        {
+            get => cbxEstado.Text;
+            set => cbxEstado.Text = value;
+        }
+        public string Cidade
+        {
+            get => cbxCidade.Text;
+            set => cbxCidade.Text = value;
+        }
         public string Endereco
         {
             get => txtEndereco.Text;
@@ -29,27 +48,9 @@ namespace CadastroCartsys.Presentation.Views.Clients
             get => txtBairro.Text;
             set => txtBairro.Text = value;
         }
-        public string Cidade
-        {
-            get => cbxCidade.Text;
-            set => cbxCidade.Text = value;
-        }
-        public string Estado
-        {
-            get => cbxEstado.Text;
-            set => cbxEstado.Text = value;
-        }
 
-        public string CpfCnpj
-        {
-            get => txtCpfCnpj.Text.Trim();
-            set => txtCpfCnpj.Text = value;
-        }
-        public string Cep
-        {
-            get => txtCep.Text.Trim();
-            set => txtCep.Text = value;
-        }
+        public ComboBox ComboState => cbxEstado;
+        public ComboBox ComboCity => cbxCidade;
 
         public event EventHandler SearchCepEvent;
         public event EventHandler LoadSearchClientEvent;
@@ -65,9 +66,14 @@ namespace CadastroCartsys.Presentation.Views.Clients
                 LoadSearchClientEvent?.Invoke(this, EventArgs.Empty);
             };
 
-            btnClose.Click += delegate
+            txtCpfCnpj.Leave += delegate
             {
-                this.Close();
+                FormatCpfCnpjEvent?.Invoke(this, EventArgs.Empty);
+            };
+            txtCpfCnpj.KeyPress += (s, e) =>
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                    e.Handled = true;
             };
 
             txtCep.Leave += delegate
@@ -79,37 +85,45 @@ namespace CadastroCartsys.Presentation.Views.Clients
                 if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                     e.Handled = true;
             };
-            txtCpfCnpj.KeyPress += (s, e) =>
-            {
-                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-                    e.Handled = true;
-            };
-            txtCpfCnpj.Leave += delegate
-            {
-                FormatCpfCnpjEvent?.Invoke(this, EventArgs.Empty);
-            };
-
-            btnSave.Click += delegate
-            {
-                SaveClientEvent?.Invoke(this, EventArgs.Empty);
-            };
 
             cbxEstado.SelectionChangeCommitted += delegate
             {
                 FilterCityEvent?.Invoke(this, EventArgs.Empty);
             };
 
-            btnCancelar.Click += delegate
-            {
-                ClearFields();
-            };
-
             btnDelete.Click += delegate
             {
                 DeleteClientEvent?.Invoke(this, EventArgs.Empty);
             };
+
+            btnCancelar.Click += delegate
+            {
+                ClearFields();
+            };
+            btnSave.Click += delegate
+            {
+                SaveClientEvent?.Invoke(this, EventArgs.Empty);
+            };
         }
 
+        public void ClearFields()
+        {
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtCpfCnpj.Clear();
+            txtCep.Clear();
+            txtEndereco.Clear();
+            txtNumero.Clear();
+            txtComplemento.Clear();
+            txtBairro.Clear();
+            dtpDataNascimento.Value = DateTime.Today;
+            dtpDataNascimento.Checked = false;
+
+            cbxCidade.DataSource = null;
+            cbxCidade.Items.Clear();
+            cbxCidade.Text = string.Empty;
+            cbxEstado.SelectedIndex = -1;
+        }
         public void PopularForm(ClientFormDto dto)
         {
             txtCodigo.Text = dto.Id.ToString();
@@ -134,26 +148,6 @@ namespace CadastroCartsys.Presentation.Views.Clients
                 dtpDataNascimento.Checked = false;
             }
         }
-
-        public void ClearFields()
-        {
-            txtCodigo.Clear();
-            txtNome.Clear();
-            txtCpfCnpj.Clear();
-            txtCep.Clear();
-            txtEndereco.Clear();
-            txtNumero.Clear();
-            txtComplemento.Clear();
-            txtBairro.Clear();
-            dtpDataNascimento.Value = DateTime.Today;
-            dtpDataNascimento.Checked = false;
-
-            cbxCidade.DataSource = null;
-            cbxCidade.Items.Clear();
-            cbxCidade.Text = string.Empty;
-            cbxEstado.SelectedIndex = -1;
-        }
-
         public ClientFormDto GetForm() => new()
         {
             Id = int.TryParse(txtCodigo.Text, out var id) ? id : 0,
@@ -176,19 +170,16 @@ namespace CadastroCartsys.Presentation.Views.Clients
             MessageBox.Show(message, "Sucesso",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         public void DisplayErrorMessage(string message)
         {
             MessageBox.Show(message, "Erro",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
         public void DisplayAttentionMessage(string message)
         {
             MessageBox.Show(message, "Atenção",
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
         public bool ShowConfirmation(string message, string title)
         {
             var result = MessageBox.Show(message, title,

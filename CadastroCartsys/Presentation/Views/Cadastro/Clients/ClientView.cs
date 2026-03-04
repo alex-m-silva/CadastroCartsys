@@ -9,11 +9,6 @@ namespace CadastroCartsys.Presentation.Views
     public partial class ClientView : Form, IClientView
     {
         private readonly ClientPresenter _presenter;
-
-        public event EventHandler SearchClientsEvent;
-        public event EventHandler FilterAlteredEvent;
-        public event EventHandler ClientSelectionEvent;
-
         public ClientView(ClientPresenter presenter)
         {
             InitializeComponent();
@@ -23,25 +18,27 @@ namespace CadastroCartsys.Presentation.Views
         }
 
         public DataGridViewColumnCollection Columns => dtgvCustomers.Columns;
-
         public int? SelectedId { get; set; }
 
-        public string SearchTerm => txtTerm.Text;
         public string FieldResearch => cbxFilter.SelectedItem is null
-            ? string.Empty
-            : ((dynamic)cbxFilter.SelectedItem).Value.ToString();
+        ? string.Empty
+        : ((dynamic)cbxFilter.SelectedItem).Value.ToString();
+        public string SearchTerm => txtTerm.Text;
 
+        public event EventHandler SearchClientsEvent;
+        public event EventHandler FilterAlteredEvent;
+        public event EventHandler ClientSelectionEvent;
         private void AssociateEventsHandler()
         {
-            txtTerm.TextChanged += delegate
-            {
-                SearchClientsEvent?.Invoke(this, EventArgs.Empty);
-            };
             cbxFilter.SelectionChangeCommitted += delegate
             {
                 if (string.IsNullOrWhiteSpace(txtTerm.Text)) return;
 
                 FilterAlteredEvent?.Invoke(this, EventArgs.Empty);
+            };
+            txtTerm.TextChanged += delegate
+            {
+                SearchClientsEvent?.Invoke(this, EventArgs.Empty);
             };
 
             dtgvCustomers.CellDoubleClick += (s, e) =>
@@ -57,11 +54,6 @@ namespace CadastroCartsys.Presentation.Views
                 ClientSelectionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             };
-
-            btnClose.Click += delegate
-            {
-                this.Close();
-            };
         }
 
         public void SetCustomerListBindingSource(BindingSource source)
@@ -69,23 +61,11 @@ namespace CadastroCartsys.Presentation.Views
             FormatDatagrid(dtgvCustomers);
             dtgvCustomers.DataSource = source;
         }
-
         private void FormatDatagrid(DataGridView gridView)
         {
             gridView.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             gridView.DefaultCellStyle.Font = new Font("Arial", 8, FontStyle.Regular);
             gridView.DefaultCellStyle.Padding = new Padding(5);
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Enter)
-            {
-                SendKeys.Send("{TAB}");
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         public void FillFilterComboBox(DataGridViewColumnCollection columns)
@@ -113,6 +93,17 @@ namespace CadastroCartsys.Presentation.Views
         {
             MessageBox.Show(message, "Erro",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

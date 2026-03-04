@@ -6,12 +6,12 @@ namespace CadastroCartsys.Presentation.Presenters
 {
     public class MainPresenter
     {
-        private IMainView _view = null!;
-        private ClientFormView? _customerForm;
-        private ReportView? _clientReport;
-
         private readonly Func<ClientFormView> _clientFactoryRegistration;
         private readonly Func<ReportView> _clientReportFactory;
+        private ClientFormView? _clientForm;
+        private ReportView? _clientReport;
+
+        private IMainView _view = null!;
 
         public MainPresenter(
             Func<ClientFormView> clientFactoryRegistration,
@@ -29,8 +29,8 @@ namespace CadastroCartsys.Presentation.Presenters
 
         private void AssociateEventHandlers()
         {
-            _view.LoadCustomerReportFormEvent += LoadCustomerReportForm;
             _view.LoadClientRegistrationFormEvent += LoadClientRegistrationForm;
+            _view.LoadClientReportFormEvent += LoadClientReportForm;
         }
 
         private void LoadClientRegistrationForm(object? sender, EventArgs e)
@@ -38,22 +38,22 @@ namespace CadastroCartsys.Presentation.Presenters
             OpenClientFormView();
         }
 
-        private void LoadCustomerReportForm(object? sender, EventArgs e)
+        private void LoadClientReportForm(object? sender, EventArgs e)
         {
             OpenClientReportView();
         }
 
         private void OpenClientFormView()
         {
-            if (_customerForm == null || _customerForm.IsDisposed)
+            if (_clientForm == null || _clientForm.IsDisposed)
             {
-                _customerForm = _clientFactoryRegistration();
-                _customerForm.FormClosed += (s, e) => _customerForm = null;
-                _customerForm.Show();
+                _clientForm = _clientFactoryRegistration();
+                _clientForm.FormClosed += (s, e) => _clientForm = null;
+                _clientForm.Show();
             }
             else
             {
-                _customerForm.BringToFront();
+                _clientForm.BringToFront();
             }
         }
 

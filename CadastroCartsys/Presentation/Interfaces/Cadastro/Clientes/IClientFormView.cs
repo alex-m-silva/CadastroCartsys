@@ -4,6 +4,21 @@ namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes
 {
     public interface IClientFormView
     {
+        void PopularForm(ClientFormDto dto);
+        void ClearFields();
+        ClientFormDto GetForm();
+
+        string CpfCnpj { get; set; }
+
+        string Cep { get; set; }
+        string Estado { get; set; }
+        string Cidade { get; set; }
+        string Endereco { get; set; }
+        string Bairro { get; set; }
+
+        ComboBox ComboState { get; }
+        ComboBox ComboCity { get; }
+
         event EventHandler SearchCepEvent;
         event EventHandler LoadSearchClientEvent;
         event EventHandler SaveClientEvent;
@@ -15,20 +30,5 @@ namespace CadastroCartsys.Presentation.Interfaces.Cadastro.Clientes
         void DisplayErrorMessage(string message);
         void DisplayAttentionMessage(string message);
         bool ShowConfirmation(string message, string title);
-
-        void PopularForm(ClientFormDto dto);
-        void ClearFields();
-        ClientFormDto GetForm();
-
-        ComboBox ComboState { get; }
-        ComboBox ComboCity { get; }
-
-        string Cep { get; set; }
-        string CpfCnpj { get; set; }
-
-        string Endereco { get; set; }
-        string Bairro { get; set; }
-        string Cidade { get; set; }
-        string Estado { get; set; }
     }
 }

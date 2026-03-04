@@ -31,7 +31,7 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
-            btnClose = new Button();
+            label1 = new Label();
             panel2 = new Panel();
             panel11 = new Panel();
             panel4 = new Panel();
@@ -71,8 +71,8 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.WhiteSmoke;
-            panel1.Controls.Add(btnClose);
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(label1);
             panel1.Controls.Add(panel2);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -81,22 +81,17 @@
             panel1.Size = new Size(962, 28);
             panel1.TabIndex = 3;
             // 
-            // btnClose
+            // label1
             // 
-            btnClose.BackColor = Color.WhiteSmoke;
-            btnClose.Dock = DockStyle.Left;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnClose.Image = Properties.Resources.arrow_back_icon_151627;
-            btnClose.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClose.Location = new Point(10, 0);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(89, 28);
-            btnClose.TabIndex = 2;
-            btnClose.Text = "Voltar";
-            btnClose.TextAlign = ContentAlignment.MiddleRight;
-            btnClose.UseVisualStyleBackColor = false;
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Left;
+            label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            label1.Location = new Point(10, 0);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(131, 25);
+            label1.TabIndex = 4;
+            label1.Text = "Listar Clientes";
             // 
             // panel2
             // 
@@ -358,9 +353,9 @@
             label4.Location = new Point(10, 0);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(141, 20);
+            label4.Size = new Size(78, 20);
             label4.TabIndex = 3;
-            label4.Text = "Campo de pesquisa";
+            label4.Text = "Filtrar por";
             // 
             // panel21
             // 
@@ -383,7 +378,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(962, 553);
             Controls.Add(dtgvCustomers);
             Controls.Add(panel47);
@@ -397,6 +392,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CartSys - Pesquisar Clientes";
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel11.ResumeLayout(false);
             panel16.ResumeLayout(false);
             panel16.PerformLayout();
@@ -410,7 +406,6 @@
 
         #endregion
         private Panel panel1;
-        private Panel panel2;
         private Panel panel11;
         private Panel panel22;
         private Panel panel23;
@@ -437,7 +432,8 @@
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column12;
-        private Button btnClose;
         private Panel panel3;
+        private Label label1;
+        private Panel panel2;
     }
 }

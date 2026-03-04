@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="CadastroCartsys.Tests/CadastroCartsys.Tests.csproj" />
   <Project Path="CadastroCartsys/CadastroCartsys.csproj" />
 </Solution>

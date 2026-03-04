@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientFormView));
             panel1 = new Panel();
             btnSearch = new Button();
-            panel3 = new Panel();
-            btnClose = new Button();
             panel8 = new Panel();
             panel4 = new Panel();
             groupBox1 = new GroupBox();
@@ -96,13 +95,11 @@
             panel12 = new Panel();
             panel10 = new Panel();
             label1 = new Label();
-            panel44 = new Panel();
             panel43 = new Panel();
             btnDelete = new Button();
             btnCancelar = new Button();
             panel48 = new Panel();
             btnSave = new Button();
-            panel46 = new Panel();
             panel49 = new Panel();
             panel53 = new Panel();
             panel2 = new Panel();
@@ -140,10 +137,8 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.WhiteSmoke;
+            panel1.BackColor = Color.White;
             panel1.Controls.Add(btnSearch);
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(btnClose);
             panel1.Controls.Add(panel8);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -153,46 +148,21 @@
             // 
             // btnSearch
             // 
-            btnSearch.BackColor = Color.WhiteSmoke;
+            btnSearch.BackColor = Color.White;
             btnSearch.BackgroundImageLayout = ImageLayout.Center;
             btnSearch.Dock = DockStyle.Left;
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnSearch.Image = Properties.Resources.seo_social_web_network_internet_340_icon_icons_com_61497;
+            btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
             btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSearch.Location = new Point(114, 0);
+            btnSearch.Location = new Point(10, 0);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(121, 28);
+            btnSearch.Size = new Size(105, 28);
             btnSearch.TabIndex = 2;
             btnSearch.Text = "Pesquisar";
             btnSearch.TextAlign = ContentAlignment.MiddleRight;
             btnSearch.UseVisualStyleBackColor = false;
-            // 
-            // panel3
-            // 
-            panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(99, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(15, 28);
-            panel3.TabIndex = 2;
-            // 
-            // btnClose
-            // 
-            btnClose.BackColor = Color.WhiteSmoke;
-            btnClose.Dock = DockStyle.Left;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnClose.Image = Properties.Resources.arrow_back_icon_151627;
-            btnClose.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClose.Location = new Point(10, 0);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(89, 28);
-            btnClose.TabIndex = 1;
-            btnClose.Text = "Voltar";
-            btnClose.TextAlign = ContentAlignment.MiddleRight;
-            btnClose.UseVisualStyleBackColor = false;
             // 
             // panel8
             // 
@@ -212,10 +182,13 @@
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = Color.WhiteSmoke;
             groupBox1.Controls.Add(panel41);
             groupBox1.Controls.Add(panel29);
             groupBox1.Controls.Add(panel17);
             groupBox1.Dock = DockStyle.Top;
+            groupBox1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            groupBox1.ForeColor = Color.Navy;
             groupBox1.Location = new Point(10, 172);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(563, 191);
@@ -227,7 +200,7 @@
             // 
             panel41.Controls.Add(panel42);
             panel41.Dock = DockStyle.Top;
-            panel41.Location = new Point(3, 129);
+            panel41.Location = new Point(3, 131);
             panel41.Name = "panel41";
             panel41.Size = new Size(557, 55);
             panel41.TabIndex = 5;
@@ -274,6 +247,7 @@
             label12.AutoSize = true;
             label12.Dock = DockStyle.Left;
             label12.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.ForeColor = Color.Black;
             label12.Location = new Point(0, 0);
             label12.Name = "label12";
             label12.Size = new Size(94, 17);
@@ -284,7 +258,7 @@
             // 
             panel29.Controls.Add(panel30);
             panel29.Dock = DockStyle.Top;
-            panel29.Location = new Point(3, 74);
+            panel29.Location = new Point(3, 76);
             panel29.Name = "panel29";
             panel29.Size = new Size(557, 55);
             panel29.TabIndex = 4;
@@ -376,6 +350,7 @@
             label7.AutoSize = true;
             label7.Dock = DockStyle.Left;
             label7.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = Color.Black;
             label7.Location = new Point(0, 0);
             label7.Name = "label7";
             label7.Size = new Size(44, 17);
@@ -404,6 +379,7 @@
             label8.AutoSize = true;
             label8.Dock = DockStyle.Left;
             label8.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.Black;
             label8.Location = new Point(0, 0);
             label8.Name = "label8";
             label8.Size = new Size(58, 17);
@@ -432,6 +408,7 @@
             label9.AutoSize = true;
             label9.Dock = DockStyle.Left;
             label9.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.ForeColor = Color.Black;
             label9.Location = new Point(0, 0);
             label9.Name = "label9";
             label9.Size = new Size(64, 17);
@@ -442,7 +419,7 @@
             // 
             panel17.Controls.Add(panel18);
             panel17.Dock = DockStyle.Top;
-            panel17.Location = new Point(3, 19);
+            panel17.Location = new Point(3, 21);
             panel17.Name = "panel17";
             panel17.Size = new Size(557, 55);
             panel17.TabIndex = 3;
@@ -539,6 +516,7 @@
             label5.AutoSize = true;
             label5.Dock = DockStyle.Left;
             label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Black;
             label5.Location = new Point(0, 0);
             label5.Name = "label5";
             label5.Size = new Size(49, 17);
@@ -567,6 +545,7 @@
             label4.AutoSize = true;
             label4.Dock = DockStyle.Left;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.Black;
             label4.Location = new Point(0, 0);
             label4.Name = "label4";
             label4.Size = new Size(49, 17);
@@ -595,6 +574,7 @@
             label6.AutoSize = true;
             label6.Dock = DockStyle.Left;
             label6.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Black;
             label6.Location = new Point(0, 0);
             label6.Name = "label6";
             label6.Size = new Size(31, 17);
@@ -603,9 +583,12 @@
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = Color.WhiteSmoke;
             groupBox2.Controls.Add(panel39);
             groupBox2.Controls.Add(panel5);
             groupBox2.Dock = DockStyle.Top;
+            groupBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            groupBox2.ForeColor = Color.Navy;
             groupBox2.Location = new Point(10, 33);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(563, 134);
@@ -617,7 +600,7 @@
             // 
             panel39.Controls.Add(panel40);
             panel39.Dock = DockStyle.Top;
-            panel39.Location = new Point(3, 74);
+            panel39.Location = new Point(3, 76);
             panel39.Name = "panel39";
             panel39.Size = new Size(557, 55);
             panel39.TabIndex = 4;
@@ -689,6 +672,7 @@
             label10.AutoSize = true;
             label10.Dock = DockStyle.Left;
             label10.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.Black;
             label10.Location = new Point(0, 0);
             label10.Name = "label10";
             label10.Size = new Size(129, 17);
@@ -717,6 +701,7 @@
             label11.AutoSize = true;
             label11.Dock = DockStyle.Left;
             label11.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.Black;
             label11.Location = new Point(0, 0);
             label11.Name = "label11";
             label11.Size = new Size(66, 17);
@@ -727,7 +712,7 @@
             // 
             panel5.Controls.Add(panel6);
             panel5.Dock = DockStyle.Top;
-            panel5.Location = new Point(3, 19);
+            panel5.Location = new Point(3, 21);
             panel5.Name = "panel5";
             panel5.Size = new Size(557, 55);
             panel5.TabIndex = 3;
@@ -787,6 +772,7 @@
             // 
             panel13.Controls.Add(label2);
             panel13.Dock = DockStyle.Left;
+            panel13.ForeColor = Color.Black;
             panel13.Location = new Point(130, 0);
             panel13.Name = "panel13";
             panel13.Size = new Size(424, 20);
@@ -825,19 +811,12 @@
             label1.AutoSize = true;
             label1.Dock = DockStyle.Left;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.Black;
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
             label1.Size = new Size(51, 17);
             label1.TabIndex = 0;
             label1.Text = "Codigo";
-            // 
-            // panel44
-            // 
-            panel44.Dock = DockStyle.Top;
-            panel44.Location = new Point(10, 363);
-            panel44.Name = "panel44";
-            panel44.Size = new Size(563, 5);
-            panel44.TabIndex = 6;
             // 
             // panel43
             // 
@@ -845,9 +824,8 @@
             panel43.Controls.Add(btnCancelar);
             panel43.Controls.Add(panel48);
             panel43.Controls.Add(btnSave);
-            panel43.Controls.Add(panel46);
             panel43.Dock = DockStyle.Top;
-            panel43.Location = new Point(10, 368);
+            panel43.Location = new Point(10, 363);
             panel43.Name = "panel43";
             panel43.Size = new Size(563, 30);
             panel43.TabIndex = 15;
@@ -855,36 +833,40 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.Red;
-            btnDelete.Dock = DockStyle.Right;
+            btnDelete.Dock = DockStyle.Left;
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(463, 0);
+            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelete.Location = new Point(0, 0);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 30);
+            btnDelete.Size = new Size(85, 30);
             btnDelete.TabIndex = 18;
             btnDelete.Text = "Excluir";
             btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnCancelar
             // 
-            btnCancelar.BackColor = Color.Orange;
-            btnCancelar.Dock = DockStyle.Left;
+            btnCancelar.BackColor = Color.DarkOrange;
+            btnCancelar.Dock = DockStyle.Right;
             btnCancelar.FlatAppearance.BorderSize = 0;
             btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnCancelar.Location = new Point(102, 0);
+            btnCancelar.ForeColor = Color.White;
+            btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCancelar.Location = new Point(383, 0);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(100, 30);
+            btnCancelar.Size = new Size(85, 30);
             btnCancelar.TabIndex = 17;
             btnCancelar.Text = "Cancelar";
+            btnCancelar.TextAlign = ContentAlignment.MiddleRight;
             btnCancelar.UseVisualStyleBackColor = false;
             // 
             // panel48
             // 
-            panel48.Dock = DockStyle.Left;
-            panel48.Location = new Point(92, 0);
+            panel48.Dock = DockStyle.Right;
+            panel48.Location = new Point(468, 0);
             panel48.Name = "panel48";
             panel48.Size = new Size(10, 30);
             panel48.TabIndex = 8;
@@ -892,25 +874,18 @@
             // btnSave
             // 
             btnSave.BackColor = Color.Green;
-            btnSave.Dock = DockStyle.Left;
+            btnSave.Dock = DockStyle.Right;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(10, 0);
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.Location = new Point(478, 0);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(82, 30);
+            btnSave.Size = new Size(85, 30);
             btnSave.TabIndex = 16;
             btnSave.Text = "Salvar";
             btnSave.UseVisualStyleBackColor = false;
-            // 
-            // panel46
-            // 
-            panel46.Dock = DockStyle.Left;
-            panel46.Location = new Point(0, 0);
-            panel46.Name = "panel46";
-            panel46.Size = new Size(10, 30);
-            panel46.TabIndex = 1;
             // 
             // panel49
             // 
@@ -925,7 +900,7 @@
             panel53.Dock = DockStyle.Left;
             panel53.Location = new Point(0, 28);
             panel53.Name = "panel53";
-            panel53.Size = new Size(10, 373);
+            panel53.Size = new Size(10, 368);
             panel53.TabIndex = 9;
             // 
             // panel2
@@ -933,17 +908,16 @@
             panel2.Dock = DockStyle.Right;
             panel2.Location = new Point(573, 28);
             panel2.Name = "panel2";
-            panel2.Size = new Size(10, 373);
+            panel2.Size = new Size(10, 368);
             panel2.TabIndex = 10;
             // 
             // ClientFormView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(583, 401);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(583, 396);
             Controls.Add(panel43);
-            Controls.Add(panel44);
             Controls.Add(groupBox1);
             Controls.Add(panel4);
             Controls.Add(groupBox2);
@@ -1010,8 +984,6 @@
 
         private Panel panel1;
         private Button btnSearch;
-        private Panel panel3;
-        private Button btnClose;
         private Panel panel4;
         private GroupBox groupBox1;
         private Panel panel29;
@@ -1058,13 +1030,11 @@
         private Panel panel12;
         private Panel panel10;
         private Label label1;
-        private Panel panel44;
         private Panel panel43;
         private Button btnDelete;
         private Button btnCancelar;
         private Panel panel48;
         private Button btnSave;
-        private Panel panel46;
         private Panel panel49;
         private Panel panel8;
         private Panel panel53;
