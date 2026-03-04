@@ -11,21 +11,19 @@ Aplicação desenvolvida como desafio técnico com foco em:
 - Arquitetura limpa e organizada (MVP)
 - Separação de responsabilidades
 - Testabilidade
-- Boas práticas de desenvolvimento
-- Performance para grandes volumes de dados (25.000+ registros)
-- Auditoria e rastreabilidade
+- Auditoria
 
 ---
 
 ## 🏗️ Arquitetura
 
-O sistema segue o padrão **MVP (Model-View-Presenter)** com divisão clara em camadas:
+O sistema segue o padrão **MVP (Model-View-Presenter):**
 
-- **Core/Domain** → Entidades, DTOs, interfaces e regras de negócio
-- **Data** → Repositórios e acesso a dados via Dapper
-- **Infrastructure** → Serviços externos (ViaCEP, Auditoria)
-- **Presentation** → WinForms + Presenters
-- **Tests** → Testes unitários (xUnit)
+- **Core/Domain** 
+- **Data**
+- **Infrastructure**
+- **Presentation**
+- **Tests**
 
 ---
 
@@ -39,7 +37,6 @@ O sistema segue o padrão **MVP (Model-View-Presenter)** com divisão clara em c
 - xUnit
 - NSubstitute
 - FluentAssertions
-- Microsoft Dependency Injection
 
 ---
 
@@ -54,11 +51,6 @@ Tabelas principais:
 - ESTADO
 - AUDITORIA_CLIENTE
 
-### Diferencial técnico
-- Utilização de **SEQUENCE** para geração de ID
-- Auditoria automática via INSERT/UPDATE/DELETE
-- Registro de usuário Windows e estação de trabalho
-
 ---
 
 ## 🚀 Funcionalidades Implementadas
@@ -67,13 +59,10 @@ Tabelas principais:
 - Inserção
 - Alteração
 - Exclusão
-- Pesquisa dinâmica
-- Validações de negócio
 
 ### ✔ Integração ViaCEP
 - Consulta automática ao sair do campo CEP
 - Preenchimento automático de endereço
-- Tratamento de CEP inválido
 
 ### ✔ Pesquisa Otimizada
 - Cache em memória
@@ -91,7 +80,7 @@ Tabelas principais:
 
 ### ✔ Relatório em PDF
 - Gerado via FastReport
-- Filtros por ID inicial/final, Cidade/Estado ou Todos
+- Filtros por Código inicial/final, Cidade/Estado ou Todos
 - Cabeçalho com descrição do filtro aplicado
 
 ---
@@ -124,7 +113,7 @@ Para configurar e executar este projeto localmente, você precisará das seguint
 
 * **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: Necessário para rodar o container do SQL Server 2022 de forma isolada, sem precisar instalar o banco na máquina.
 * **[SQL Server Management Studio (SSMS)](https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms)**: Para conectar ao banco de dados e executar o script de criação e população das tabelas.
-* **[.NET 8 SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)**: Para compilar e executar a aplicação (caso opte por rodar via código-fonte).
+* **[.NET 8 SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)**: Para compilar e executar a aplicação.
 
 ---
 
