@@ -118,6 +118,14 @@ Executar testes:
 dotnet test
 ```
 
+## 📋 Pré-requisitos
+
+Para configurar e executar este projeto localmente, você precisará das seguintes ferramentas:
+
+* **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: Necessário para rodar o container do SQL Server 2022 de forma isolada, sem precisar instalar o banco na máquina.
+* **[SQL Server Management Studio (SSMS)](https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms)**: Para conectar ao banco de dados e executar o script de criação e população das tabelas.
+* **[.NET 8 SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)**: Para compilar e executar a aplicação (caso opte por rodar via código-fonte).
+
 ---
 
 ## ⚙️ Como Configurar e Executar
