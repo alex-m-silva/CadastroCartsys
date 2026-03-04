@@ -116,3 +116,17 @@ Executar testes:
 
 ```bash
 dotnet test
+```
+
+---
+
+## ⚙️ Como Configurar e Executar
+
+Para facilitar a avaliação, o projeto foi estruturado para rodar rapidamente utilizando Docker e os executáveis já estão compilados.
+
+### 1. Banco de Dados (Docker + SQL Server 2022)
+Para não precisar instalar o SQL Server localmente, você pode subir uma instância via Docker com o comando abaixo:
+
+```bash
+docker pull mcr.microsoft.com/mssql/server:2022-latest
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=cartsys@123" -p 1433:1433 --name mssql -d mcr.microsoft.com/mssql/server:2022-latest
