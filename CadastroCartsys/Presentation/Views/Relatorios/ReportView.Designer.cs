@@ -474,6 +474,7 @@
             Controls.Add(panel5);
             Controls.Add(panel15);
             Controls.Add(panel8);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ReportView";

@@ -2,7 +2,6 @@
 using CadastroCartsys.Data.Repositories.Interfaces;
 using CadastroCartsys.Domain.Entities;
 using CadastroCartsys.Presentation.Interfaces.Cadastro.Relatorios;
-using FastReport;
 
 namespace CadastroCartsys.Presentation.Presenters.Relatorios
 {
@@ -108,7 +107,7 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             if (filter.IdInicial.HasValue && filter.IdFinal.HasValue
                 && filter.IdInicial > filter.IdFinal)
             {
-                _view.DisplayErrorMessage("ID Inicial não pode ser maior que ID Final.");
+                _view.DisplayErrorMessage("Código Inicial não pode ser maior que código Final.");
                 return false;
             }
 
@@ -122,7 +121,8 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
 
             report.Load(reportPath);
 
-            report.RegisterData(dataClient.Take(100), "Clientes");
+            // 25Mil clientes não abriu o pdf Take para testes
+            report.RegisterData(dataClient.Take(500), "Clientes");
             report.GetDataSource("Clientes").Enabled = true;
 
             report.SetParameterValue("FiltroDescricao", GetDescriptionFilter(filter));

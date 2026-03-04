@@ -114,8 +114,8 @@ namespace CadastroCartsys.Presentation.Views.Clients
         {
             txtCodigo.Text = dto.Id.ToString();
             txtNome.Text = dto.Nome;
-            txtCpfCnpj.Text = dto.CpfCnpj;
-            txtCep.Text = dto.Cep ?? string.Empty;
+            txtCpfCnpj.Text = dto.CpfCnpj.FormatCpfCnpj();
+            txtCep.Text = dto.Cep.FormatCep() ?? string.Empty;
             txtEndereco.Text = dto.Endereco ?? string.Empty;
             txtNumero.Text = dto.Numero ?? string.Empty;
             txtComplemento.Text = dto.Complemento ?? string.Empty;

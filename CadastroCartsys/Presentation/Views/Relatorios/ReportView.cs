@@ -1,14 +1,5 @@
 ﻿using CadastroCartsys.Presentation.Interfaces.Cadastro.Relatorios;
 using CadastroCartsys.Presentation.Presenters.Relatorios;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CadastroCartsys.Presentation.Views.Relatorios
 {
@@ -23,26 +14,23 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             AssociateEventsHandler();
         }
 
-        public int? IdInitial => int.TryParse(txtIdInicial.Text, out var i) ? i : null;
+        public int? IdInitial
+            => int.TryParse(txtIdInicial.Text, out var i) ? i : null;
 
-        public int? IdEnd => int.TryParse(txtIdFinal.Text, out var i) ? i : null;
+        public int? IdEnd
+            => int.TryParse(txtIdFinal.Text, out var i) ? i : null;
 
-        public bool All => chTodos.Checked;
+        public bool All
+            => chTodos.Checked;
 
-        public ComboBox ComboState => cbxEstado;
+        public ComboBox ComboState
+            => cbxEstado;
 
-        public ComboBox ComboCity => cbxCidade;
+        public ComboBox ComboCity
+            => cbxCidade;
 
         public event EventHandler GenerateEventReport;
         public event EventHandler FilterCityEvent;
-
-        private void ToggleFiltros(bool habilitado)
-        {
-            txtIdInicial.Enabled = habilitado;
-            txtIdFinal.Enabled = habilitado;
-            cbxEstado.Enabled = habilitado;
-            cbxCidade.Enabled = habilitado;
-        }
 
         private void AssociateEventsHandler()
         {
@@ -68,22 +56,12 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
                 this.Close();
             };
         }
-
-        // Sobrescreve Fun para enter = tab
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        private void ToggleFiltros(bool habilitado)
         {
-            if (keyData == Keys.Enter)
-            {
-                SendKeys.Send("{TAB}");
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        public void DisplayErrorMessage(string message)
-        {
-            MessageBox.Show(message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            txtIdInicial.Enabled = habilitado;
+            txtIdFinal.Enabled = habilitado;
+            cbxEstado.Enabled = habilitado;
+            cbxCidade.Enabled = habilitado;
         }
 
         private void ClearFields()
@@ -95,6 +73,24 @@ namespace CadastroCartsys.Presentation.Views.Relatorios
             cbxEstado.SelectedIndex = -1;
             cbxCidade.SelectedIndex = -1;
             chTodos.Checked = false;
+            ToggleFiltros(true);
+        }
+
+        public void DisplayErrorMessage(string message)
+        {
+            MessageBox.Show(message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        // Sobrescreve Fun para enter = tab
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

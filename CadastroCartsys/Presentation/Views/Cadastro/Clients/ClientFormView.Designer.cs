@@ -308,6 +308,7 @@
             txtBairro.Dock = DockStyle.Left;
             txtBairro.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtBairro.Location = new Point(325, 20);
+            txtBairro.MaxLength = 100;
             txtBairro.Name = "txtBairro";
             txtBairro.Size = new Size(229, 29);
             txtBairro.TabIndex = 13;
@@ -325,6 +326,7 @@
             txtNumero.Dock = DockStyle.Left;
             txtNumero.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtNumero.Location = new Point(220, 20);
+            txtNumero.MaxLength = 20;
             txtNumero.Name = "txtNumero";
             txtNumero.Size = new Size(95, 29);
             txtNumero.TabIndex = 12;
@@ -342,6 +344,7 @@
             txtEndereco.Dock = DockStyle.Left;
             txtEndereco.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtEndereco.Location = new Point(0, 20);
+            txtEndereco.MaxLength = 100;
             txtEndereco.Name = "txtEndereco";
             txtEndereco.Size = new Size(210, 29);
             txtEndereco.TabIndex = 11;
@@ -504,6 +507,7 @@
             txtCep.Dock = DockStyle.Left;
             txtCep.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtCep.Location = new Point(0, 20);
+            txtCep.MaxLength = 9;
             txtCep.Name = "txtCep";
             txtCep.Size = new Size(120, 29);
             txtCep.TabIndex = 8;
@@ -655,7 +659,7 @@
             txtCpfCnpj.Dock = DockStyle.Left;
             txtCpfCnpj.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtCpfCnpj.Location = new Point(0, 20);
-            txtCpfCnpj.MaxLength = 20;
+            txtCpfCnpj.MaxLength = 18;
             txtCpfCnpj.Name = "txtCpfCnpj";
             txtCpfCnpj.Size = new Size(274, 29);
             txtCpfCnpj.TabIndex = 5;
@@ -947,6 +951,8 @@
             Controls.Add(panel53);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "ClientFormView";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
