@@ -122,7 +122,7 @@ namespace CadastroCartsys.Presentation.Presenters.Relatorios
             report.Load(reportPath);
 
             // 25Mil clientes não abriu o pdf Take para testes
-            report.RegisterData(dataClient.Take(500), "Clientes");
+            report.RegisterData(dataClient, "Clientes");
             report.GetDataSource("Clientes").Enabled = true;
 
             report.SetParameterValue("FiltroDescricao", GetDescriptionFilter(filter));
