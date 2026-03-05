@@ -132,4 +132,4 @@ docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=cartsys@123" -p 1433:1433 --
 
 Sistema de cadastro de clientes desenvolvido em .NET.
 
-[![Download](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)]([https://github.com/SEU_USUARIO/SEU_REPOSITORIO/releases/latest](https://github.com/alex-m-silva/CadastroCartsys/releases/tag/v1.0.0))
+[![Download](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/alex-m-silva/CadastroCartsys/releases/tag/v1.0.0))
