@@ -61,9 +61,6 @@
             btnGerar = new Button();
             panel4 = new Panel();
             panel48 = new Panel();
-            panel8 = new Panel();
-            label6 = new Label();
-            panel14 = new Panel();
             panel15 = new Panel();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
@@ -78,14 +75,13 @@
             panel24.SuspendLayout();
             panel22.SuspendLayout();
             panel43.SuspendLayout();
-            panel8.SuspendLayout();
             SuspendLayout();
             // 
             // panel5
             // 
             panel5.Controls.Add(panel6);
             panel5.Dock = DockStyle.Top;
-            panel5.Location = new Point(0, 33);
+            panel5.Location = new Point(0, 5);
             panel5.Name = "panel5";
             panel5.Size = new Size(464, 55);
             panel5.TabIndex = 4;
@@ -244,7 +240,7 @@
             // 
             panel17.Controls.Add(panel18);
             panel17.Dock = DockStyle.Top;
-            panel17.Location = new Point(0, 88);
+            panel17.Location = new Point(0, 60);
             panel17.Name = "panel17";
             panel17.Size = new Size(464, 55);
             panel17.TabIndex = 5;
@@ -369,7 +365,7 @@
             panel43.Controls.Add(panel4);
             panel43.Controls.Add(panel48);
             panel43.Dock = DockStyle.Top;
-            panel43.Location = new Point(0, 143);
+            panel43.Location = new Point(0, 115);
             panel43.Name = "panel43";
             panel43.Size = new Size(464, 30);
             panel43.TabIndex = 16;
@@ -419,41 +415,10 @@
             panel48.Size = new Size(10, 30);
             panel48.TabIndex = 8;
             // 
-            // panel8
-            // 
-            panel8.BackColor = Color.White;
-            panel8.Controls.Add(label6);
-            panel8.Controls.Add(panel14);
-            panel8.Dock = DockStyle.Top;
-            panel8.Location = new Point(0, 0);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(464, 28);
-            panel8.TabIndex = 17;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Dock = DockStyle.Left;
-            label6.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label6.Location = new Point(10, 0);
-            label6.Margin = new Padding(4, 0, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(159, 25);
-            label6.TabIndex = 11;
-            label6.Text = "Relatorio clientes";
-            // 
-            // panel14
-            // 
-            panel14.Dock = DockStyle.Left;
-            panel14.Location = new Point(0, 0);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(10, 28);
-            panel14.TabIndex = 10;
-            // 
             // panel15
             // 
             panel15.Dock = DockStyle.Top;
-            panel15.Location = new Point(0, 28);
+            panel15.Location = new Point(0, 0);
             panel15.Name = "panel15";
             panel15.Size = new Size(464, 5);
             panel15.TabIndex = 18;
@@ -463,12 +428,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(464, 177);
+            ClientSize = new Size(464, 149);
             Controls.Add(panel43);
             Controls.Add(panel17);
             Controls.Add(panel5);
             Controls.Add(panel15);
-            Controls.Add(panel8);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -496,8 +460,6 @@
             panel22.ResumeLayout(false);
             panel22.PerformLayout();
             panel43.ResumeLayout(false);
-            panel8.ResumeLayout(false);
-            panel8.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -536,9 +498,6 @@
         private Panel panel48;
         private Button btnGerar;
         private Panel panel4;
-        private Panel panel8;
-        private Panel panel14;
         private Panel panel15;
-        private Label label6;
     }
 }

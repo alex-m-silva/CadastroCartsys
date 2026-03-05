@@ -17,7 +17,7 @@ namespace CadastroCartsys.Presentation.Views
             AssociateEventsHandler();
         }
 
-        public DataGridViewColumnCollection Columns => dtgvCustomers.Columns;
+        public DataGridViewColumnCollection Columns => dtgvClients.Columns;
         public int? SelectedId { get; set; }
 
         public string FieldResearch => cbxFilter.SelectedItem is null
@@ -41,15 +41,15 @@ namespace CadastroCartsys.Presentation.Views
                 SearchClientsEvent?.Invoke(this, EventArgs.Empty);
             };
 
-            dtgvCustomers.CellDoubleClick += (s, e) =>
+            dtgvClients.CellDoubleClick += (s, e) =>
             {
                 if (e.RowIndex < 0)
                     return;
 
-                if (dtgvCustomers.CurrentRow?.DataBoundItem is not ClientFormDto cliente)
+                if (dtgvClients.CurrentRow?.DataBoundItem is not ClientFormDto cliente)
                     return;
 
-                SelectedId = (int)dtgvCustomers.Rows[e.RowIndex].Cells["Column1"].Value;
+                SelectedId = (int)dtgvClients.Rows[e.RowIndex].Cells["Column1"].Value;
                 if (SelectedId == null) return;
                 ClientSelectionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
@@ -58,8 +58,8 @@ namespace CadastroCartsys.Presentation.Views
 
         public void SetCustomerListBindingSource(BindingSource source)
         {
-            FormatDatagrid(dtgvCustomers);
-            dtgvCustomers.DataSource = source;
+            FormatDatagrid(dtgvClients);
+            dtgvClients.DataSource = source;
         }
         private void FormatDatagrid(DataGridView gridView)
         {

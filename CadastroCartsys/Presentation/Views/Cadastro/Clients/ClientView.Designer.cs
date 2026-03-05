@@ -30,9 +30,6 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            panel1 = new Panel();
-            label1 = new Label();
-            panel2 = new Panel();
             panel11 = new Panel();
             panel4 = new Panel();
             panel16 = new Panel();
@@ -42,7 +39,7 @@
             cbxFilter = new ComboBox();
             panel23 = new Panel();
             panel47 = new Panel();
-            dtgvCustomers = new DataGridView();
+            dtgvClients = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
@@ -60,47 +57,13 @@
             label4 = new Label();
             panel21 = new Panel();
             panel3 = new Panel();
-            panel1.SuspendLayout();
             panel11.SuspendLayout();
             panel16.SuspendLayout();
             panel22.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dtgvCustomers).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtgvClients).BeginInit();
             panel10.SuspendLayout();
             panel20.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(panel2);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 3, 4, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(962, 28);
-            panel1.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Left;
-            label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label1.Location = new Point(10, 0);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(131, 25);
-            label1.TabIndex = 4;
-            label1.Text = "Listar Clientes";
-            // 
-            // panel2
-            // 
-            panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(4, 3, 4, 3);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(10, 28);
-            panel2.TabIndex = 0;
             // 
             // panel11
             // 
@@ -108,7 +71,7 @@
             panel11.Controls.Add(panel16);
             panel11.Controls.Add(panel22);
             panel11.Dock = DockStyle.Top;
-            panel11.Location = new Point(0, 56);
+            panel11.Location = new Point(0, 28);
             panel11.Margin = new Padding(4, 3, 4, 3);
             panel11.Name = "panel11";
             panel11.Size = new Size(962, 31);
@@ -188,23 +151,23 @@
             // panel47
             // 
             panel47.Dock = DockStyle.Top;
-            panel47.Location = new Point(0, 87);
+            panel47.Location = new Point(0, 59);
             panel47.Margin = new Padding(4, 3, 4, 3);
             panel47.Name = "panel47";
             panel47.Size = new Size(962, 6);
             panel47.TabIndex = 12;
             // 
-            // dtgvCustomers
+            // dtgvClients
             // 
-            dtgvCustomers.AllowUserToAddRows = false;
-            dtgvCustomers.AllowUserToDeleteRows = false;
-            dtgvCustomers.AllowUserToOrderColumns = true;
-            dtgvCustomers.AllowUserToResizeColumns = false;
-            dtgvCustomers.AllowUserToResizeRows = false;
-            dtgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dtgvCustomers.BackgroundColor = Color.White;
-            dtgvCustomers.BorderStyle = BorderStyle.None;
-            dtgvCustomers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dtgvClients.AllowUserToAddRows = false;
+            dtgvClients.AllowUserToDeleteRows = false;
+            dtgvClients.AllowUserToOrderColumns = true;
+            dtgvClients.AllowUserToResizeColumns = false;
+            dtgvClients.AllowUserToResizeRows = false;
+            dtgvClients.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dtgvClients.BackgroundColor = Color.White;
+            dtgvClients.BorderStyle = BorderStyle.None;
+            dtgvClients.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.Navy;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
@@ -212,9 +175,9 @@
             dataGridViewCellStyle1.SelectionBackColor = Color.Navy;
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dtgvCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dtgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column11, Column4, Column10, Column9, Column6, Column5, Column7, Column8, Column12 });
+            dtgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dtgvClients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgvClients.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column11, Column4, Column10, Column9, Column6, Column5, Column7, Column8, Column12 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
@@ -222,22 +185,22 @@
             dataGridViewCellStyle2.SelectionBackColor = Color.DodgerBlue;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dtgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
-            dtgvCustomers.Dock = DockStyle.Fill;
-            dtgvCustomers.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dtgvCustomers.EnableHeadersVisualStyles = false;
-            dtgvCustomers.GridColor = Color.White;
-            dtgvCustomers.Location = new Point(0, 93);
-            dtgvCustomers.Margin = new Padding(4, 3, 4, 3);
-            dtgvCustomers.Name = "dtgvCustomers";
-            dtgvCustomers.RowHeadersVisible = false;
-            dtgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dtgvCustomers.ShowCellErrors = false;
-            dtgvCustomers.ShowCellToolTips = false;
-            dtgvCustomers.ShowEditingIcon = false;
-            dtgvCustomers.ShowRowErrors = false;
-            dtgvCustomers.Size = new Size(962, 460);
-            dtgvCustomers.TabIndex = 15;
+            dtgvClients.DefaultCellStyle = dataGridViewCellStyle2;
+            dtgvClients.Dock = DockStyle.Fill;
+            dtgvClients.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dtgvClients.EnableHeadersVisualStyles = false;
+            dtgvClients.GridColor = Color.White;
+            dtgvClients.Location = new Point(0, 65);
+            dtgvClients.Margin = new Padding(4, 3, 4, 3);
+            dtgvClients.Name = "dtgvClients";
+            dtgvClients.RowHeadersVisible = false;
+            dtgvClients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtgvClients.ShowCellErrors = false;
+            dtgvClients.ShowCellToolTips = false;
+            dtgvClients.ShowEditingIcon = false;
+            dtgvClients.ShowRowErrors = false;
+            dtgvClients.Size = new Size(962, 488);
+            dtgvClients.TabIndex = 15;
             // 
             // Column1
             // 
@@ -328,7 +291,7 @@
             // 
             panel10.Controls.Add(panel20);
             panel10.Dock = DockStyle.Top;
-            panel10.Location = new Point(0, 33);
+            panel10.Location = new Point(0, 5);
             panel10.Margin = new Padding(4, 3, 4, 3);
             panel10.Name = "panel10";
             panel10.Size = new Size(962, 23);
@@ -369,7 +332,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(0, 28);
+            panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(962, 5);
             panel3.TabIndex = 16;
@@ -380,24 +343,21 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(962, 553);
-            Controls.Add(dtgvCustomers);
+            Controls.Add(dtgvClients);
             Controls.Add(panel47);
             Controls.Add(panel11);
             Controls.Add(panel10);
             Controls.Add(panel3);
-            Controls.Add(panel1);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ClientView";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CartSys - Pesquisar Clientes";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel11.ResumeLayout(false);
             panel16.ResumeLayout(false);
             panel16.PerformLayout();
             panel22.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dtgvCustomers).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtgvClients).EndInit();
             panel10.ResumeLayout(false);
             panel20.ResumeLayout(false);
             panel20.PerformLayout();
@@ -405,7 +365,6 @@
         }
 
         #endregion
-        private Panel panel1;
         private Panel panel11;
         private Panel panel22;
         private Panel panel23;
@@ -413,7 +372,7 @@
         private TextBox txtTerm;
         private Panel panel17;
         private Panel panel47;
-        private DataGridView dtgvCustomers;
+        private DataGridView dtgvClients;
         private Panel panel10;
         private Panel panel20;
         private Label label4;
@@ -433,7 +392,5 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column12;
         private Panel panel3;
-        private Label label1;
-        private Panel panel2;
     }
 }
